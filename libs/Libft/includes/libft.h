@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemontei <kemontei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klino-an <klino-an@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:32:30 by kemontei          #+#    #+#             */
-/*   Updated: 2025/06/25 17:12:57 by kemontei         ###   ########.fr       */
+/*   Updated: 2026/04/16 14:56:20 by klino-an         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <ctype.h>
 # include <fcntl.h>
 # include "./ft_printf.h"
+# include "./ft_dprintf.h"
 # include "./get_next_line.h"
 # include "./get_next_line_bonus.h"
 

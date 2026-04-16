@@ -11,12 +11,15 @@ LIBSDIR 	= libs/
 LIBFTDIR 	= $(LIBSDIR)Libft/
 MLIBXDIR 	= $(LIBSDIR)minilibx-linux/
 INCLUDE 	= -I$(INCDIR)
+PARSEDIR	= parsing/
 
 # ================================= FILES =================================== #
 
 SRC_FILES	= cub3d.c 
+PARSE_FILES = parsing1.c
 
 SRC = $(addprefix $(SRCDIR), $(SRC_FILES)) \
+	  $(addprefix $(SRCDIR)$(PARSEDIR), $(PARSE_FILES)) 
 
 # ================================ OBJECTS =================================== #
 
@@ -62,7 +65,7 @@ $(NAME): $(OBJS) $(LIBFT)
 
 # ----------------------------- Object Files -------------------------------- #
 $(OBJDIR)%.o: $(SRCDIR)%.c
-	@mkdir -p $(OBJDIR)
+	@mkdir -p $(dir $@)
 	@echo "$(CYAN)Compiling $<...$(DEF_COLOR)"
 	@$(CC) $(CFLAGS) -c $(INCLUDE) -I$(LIBFTDIR)includes -I$(MLIBXDIR) $< -o $@
 
