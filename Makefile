@@ -12,14 +12,17 @@ LIBFTDIR 	= $(LIBSDIR)Libft/
 MLIBXDIR 	= $(LIBSDIR)minilibx-linux/
 INCLUDE 	= -I$(INCDIR)
 PARSEDIR	= parsing/
+UTILSDIR	= utils/
 
 # ================================= FILES =================================== #
 
-SRC_FILES	= cub3d.c 
+SRC_FILES	= main.c 
+UTILS_FILES	= utils.c 
 PARSE_FILES = parsing1.c
 
 SRC = $(addprefix $(SRCDIR), $(SRC_FILES)) \
-	  $(addprefix $(SRCDIR)$(PARSEDIR), $(PARSE_FILES)) 
+	  $(addprefix $(SRCDIR)$(PARSEDIR), $(PARSE_FILES)) \
+	  $(addprefix $(SRCDIR)$(UTILSDIR), $(UTILS_FILES)) 
 
 # ================================ OBJECTS =================================== #
 
@@ -102,6 +105,6 @@ reclear:
 	@make re && clear
 
 v: reclear
-	valgrind --leak-check=full  --track-origins=yes --show-leak-kinds=all --track-fds=yes ./$(NAME)
+	valgrind --leak-check=full  --track-origins=yes --show-leak-kinds=all --track-fds=yes ./$(NAME) maps/map1.cub
 # ------------------------------- Phony Targets ----------------------------- #
 .PHONY: all clean fclean re

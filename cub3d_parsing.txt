@@ -1,0 +1,113 @@
+
+------------------------>   CUB3D PARSING
+
+
+-------->    FILE
+
+TEST MORE THAN 2 ARGUMENTS
+
+TEST NON EXISTENT FILE
+
+TEST FILE WITH NO READING PERMISSIONS 
+
+TEST MAP WITH ABSOLUTELY NOTHING
+
+
+-------->    TEXTURES
+
+NO   (with 1 space)
+
+NO   (no space)
+
+SO./imgs/south.png 
+
+                  SO ./imgs/south.png  
+
+SO ./imgs/south.png                        (with spaces)
+
+SO ./imgs/south.pngaaa
+
+SO ./imgs/south.png                        a
+
+SO ./imgs/south.png                        (with no permissions)
+
+NO ./textures/north.xpm,foo                invalid
+
+Order must not matter
+
+Empty lines between headers                are valid
+
+Lowercase                                  is invalid
+
+NO ./textures/north                        no extension is invalid
+
+Texture between map lines                  invalid
+
+Texture after map                          invalid
+
+Duplicate with spaces
+NO ./imgs/north.png
+    NO ./imgs/north.png
+
+Tabs must be INVALID
+
+
+Test      --->      Double defenition of element
+
+Test      --->      Not all elements were defined
+
+
+
+-------->    RGB
+
+
+F   (with 1 space)
+
+F   (no space)
+
+F 1,2
+
+F 1,2,3,4
+
+F 256,0,0
+
+F -1,0,0
+
+F 1,2,3abc
+
+F 1, 2 3
+
+F 1,,3
+
+F ,1,3
+
+F 1,2,
+
+F abc,2,3
+
+F 1           ,2         ,   3      
+
+
+
+Test      --->      Double defenition of element
+
+Test      --->      Not all elements were defined
+
+
+
+-------->    MAP
+
+
+No map found in file
+
+Map only has spaces (no map)
+
+The map has 6 possible characters: 0,1,N,S,E,W,' ' 
+
+More than one player position found
+
+No player position found
+
+Map is not surrounded by walls
+
+Map is not the last element in the file...

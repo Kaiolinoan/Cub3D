@@ -19,6 +19,7 @@
 # include <mlx.h>
 # include <stdbool.h>
 # include <time.h>
+#include <errno.h>
 
 typedef void*	t_sprite;
 
@@ -30,13 +31,19 @@ typedef enum e_direction
 	EAST,
 }	t_direction;
 
+typedef struct s_rgb
+{
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+}	t_rgb;
+
 typedef struct	s_map
 {
+	char 		**grid;
+	t_rgb		floor;
+	t_rgb		ceiling;
 	t_direction starting_direction;
-	char		*floor;
-	char		*ceiling;
-	char ** grid;
-	
 }	t_map;
 
 typedef struct	s_image
@@ -52,13 +59,17 @@ typedef struct	s_game
 	t_image		img;
 	void		*mlx;
 	void		*win;
-
+	t_map		*map;
 }	t_game;
-
 
 //--------------------------PARSING-----------------------
 bool	check_map_extension(char *filename);
 bool	check_if_map_is_valid(char *filename);
+int get_map_details(t_game *game, char *filename);
 
+//--------------------------UTILS-----------------------
+void	clear_matriz(char **matriz);
+void	print_error(char *msg);
+void clear_game(t_game *game);
 
 #endif
