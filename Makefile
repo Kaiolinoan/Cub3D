@@ -17,8 +17,8 @@ UTILSDIR	= utils/
 # ================================= FILES =================================== #
 
 SRC_FILES	= main.c 
-UTILS_FILES	= utils.c 
-PARSE_FILES = parsing1.c
+UTILS_FILES	= utils.c parse_utils.c
+PARSE_FILES = parsing1.c parse_map.c
 
 SRC = $(addprefix $(SRCDIR), $(SRC_FILES)) \
 	  $(addprefix $(SRCDIR)$(PARSEDIR), $(PARSE_FILES)) \

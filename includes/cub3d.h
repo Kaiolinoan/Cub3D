@@ -19,7 +19,9 @@
 # include <mlx.h>
 # include <stdbool.h>
 # include <time.h>
-#include <errno.h>
+#include <errno.h> 
+
+#define ALLOC_ERR "Memory allocation failed"
 
 typedef void*	t_sprite;
 
@@ -64,12 +66,20 @@ typedef struct	s_game
 
 //--------------------------PARSING-----------------------
 bool	check_map_extension(char *filename);
-bool	check_if_map_is_valid(char *filename);
-int get_map_details(t_game *game, char *filename);
+bool	check_if_map_is_valid(char *filename, t_game *game);
+int		get_map_details(t_game *game, char *filename);
+//ver se realmente tem de ficar aqui no header ou se e so static
+bool	check_maze_borders(char **grid);
+bool	check_maze(t_game *game);
+int		check_maze_chars(char **grid);
+bool	store_maze(t_game *game, char *full_line);
 
 //--------------------------UTILS-----------------------
 void	clear_matriz(char **matriz);
 void	print_error(char *msg);
-void clear_game(t_game *game);
+void	clear_game(t_game *game);
+size_t	array_len(char **array);
+size_t	ft_strlen_without_space(const char *s);
+char	*ft_strjoin3(char *s1, char *s2); //mudar esse nome dps
 
 #endif

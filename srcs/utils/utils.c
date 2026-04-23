@@ -19,9 +19,19 @@ void	print_error(char *msg)
 	char	*header;
 
 	header = "\033[1;31mError\033[0m\n";
-	ft_putstr_fd(header, 2);
-	ft_putstr_fd(msg, 2);
-	write(2, "\n", 1);
+    ft_dprintf(2, "%s%s\n", header, msg);
+}
+
+size_t array_len(char **array)
+{
+    size_t i;
+
+    i = 0;
+    if (!array)
+        return (0);
+    while (array[i])
+        i++;
+    return (i);
 }
 
 void clear_game(t_game *game)
@@ -30,6 +40,7 @@ void clear_game(t_game *game)
     free(game->img.west);
     free(game->img.north);
     free(game->img.south);
+    clear_matriz(game->map->grid);
     free(game->map);
     free(game);
 }
