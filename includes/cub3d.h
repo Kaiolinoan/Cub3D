@@ -19,9 +19,9 @@
 # include <mlx.h>
 # include <stdbool.h>
 # include <time.h>
-#include <errno.h> 
+# include <errno.h> 
 
-#define ALLOC_ERR "Memory allocation failed"
+# define ALLOC_ERR "Memory allocation failed"
 
 typedef void*	t_sprite;
 
@@ -35,20 +35,20 @@ typedef enum e_direction
 
 typedef struct s_rgb
 {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
 }	t_rgb;
 
-typedef struct	s_map
+typedef struct s_map
 {
-	char 		**grid;
+	char		**grid;
 	t_rgb		floor;
 	t_rgb		ceiling;
-	t_direction starting_direction;
+	t_direction	starting_direction;
 }	t_map;
 
-typedef struct	s_image
+typedef struct s_image
 {
 	t_sprite	north;
 	t_sprite	south;
@@ -56,7 +56,7 @@ typedef struct	s_image
 	t_sprite	east;
 }	t_image;
 
-typedef struct	s_game
+typedef struct s_game
 {
 	t_image		img;
 	void		*mlx;
