@@ -5,6 +5,8 @@ void	clear_matriz(char **matriz)
 	size_t	i;
 
 	i = 0;
+	if (!matriz)
+		return ;
 	while (matriz[i])
 	{
 		free(matriz[i]);
@@ -37,10 +39,14 @@ size_t	array_len(char **array)
 
 void	clear_game(t_game *game)
 {
+	if (!game)
+		return;
 	free(game->img.east);
 	free(game->img.west);
 	free(game->img.north);
 	free(game->img.south);
+	free(game->map->floor);
+	free(game->map->ceiling);
 	clear_matriz(game->map->grid);
 	free(game->map);
 	free(game);

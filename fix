@@ -1,8 +1,9 @@
-coordinate without a space gives multiple error messages; (I found out that its bc its getting the map lines and printing error on them)
-
-Error
-Invalid coordinate
-[1]    180162 segmentation fault (core dumped)  ./cub3d maps/map1.cub |
-       180163 done         
-
 melhorar error messages;
+
+TEST MAP WITH ABSOLUTELY NOTHING
+
+NEED TO VERIFY TEXTURE EXTENSION
+
+F 1,100,,,,,,0
+
+F 4,1,3,  

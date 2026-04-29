@@ -22,6 +22,8 @@
 # include <errno.h> 
 
 # define ALLOC_ERR "Memory allocation failed"
+# define RGB_DIGIT_ERR "RGB must only have digits"
+# define RGB_RANGE_ERR "RGB values must be between 0 to 255 range"
 
 typedef void*	t_sprite;
 
@@ -43,8 +45,8 @@ typedef struct s_rgb
 typedef struct s_map
 {
 	char		**grid;
-	t_rgb		floor;
-	t_rgb		ceiling;
+	t_rgb		*floor;
+	t_rgb		*ceiling;
 	t_direction	starting_direction;
 }	t_map;
 

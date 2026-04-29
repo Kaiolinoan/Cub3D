@@ -41,7 +41,7 @@ int	check_maze_chars(char **grid)
 		j = 0;
 		while (grid[i][j])
 		{
-			if (grid[i][j] != '0' && grid[i][j] != '1' && grid[i][j] != ' ')
+			if (grid[i][j] && grid[i][j] != '0' && grid[i][j] != '1' && grid[i][j] != ' ')
 			{
 				if (grid[i][j] == 'N' || grid[i][j] == 'S'
 					|| grid[i][j] == 'W' || grid[i][j] == 'E')
@@ -56,14 +56,32 @@ int	check_maze_chars(char **grid)
 	return (count);
 }
 
+bool check_full_line(char *full_line)
+{
+	int	i;
+
+	i = 0;
+	if (!full_line)
+		return (false);
+	while (full_line[i])
+	{
+		if (full_line[i] != '\n')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 bool	store_maze(t_game *game, char *full_line)
 {
 	char	**temp;
 	int		size;
 	int		i;
 
+	if (!check_full_line(full_line))
+		return (print_error("There is no map"), free(full_line), false);
 	temp = ft_split(full_line, '\n');
-	if (!temp)
+	if (!temp || !*temp)
 		return (free(full_line), false);
 	size = array_len(temp);
 	game->map->grid = ft_calloc(size + 1, sizeof(char *));
