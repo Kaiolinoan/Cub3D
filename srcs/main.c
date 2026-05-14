@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-t_game	*initialize_game(char *filename)
+static t_game	*initialize_game(char *filename)
 {
 	t_game	*game;
 
@@ -43,6 +43,13 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!check_if_map_is_valid(argv[1], game))
 		return (clear_game(game), 1);
-	clear_game(game);
 	printf("passou pelo parsing\n");
+	clear_game(game);
 }
+
+	// printf("EA: %s\n", (char *)game->img.east);
+	// printf("WE: %s\n", (char *)game->img.west);
+	// printf("SO: %s\n", (char *)game->img.south);
+	// printf("NO: %s\n", (char *)game->img.north);
+	// printf("C: %d, %d, %d\n", game->map->ceiling->r, game->map->ceiling->g, game->map->ceiling->b);
+	// printf("F: %d, %d, %d\n", game->map->floor->r, game->map->floor->g, game->map->floor->b);

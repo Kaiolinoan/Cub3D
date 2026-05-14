@@ -1,9 +1,1 @@
-melhorar error messages;
-
-TEST MAP WITH ABSOLUTELY NOTHING
-
-NEED TO VERIFY TEXTURE EXTENSION
-
-F 1,100,,,,,,0
-
-F 4,1,3,  
+adicionar error msg para menos que 6 elements

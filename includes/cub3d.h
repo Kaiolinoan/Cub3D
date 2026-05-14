@@ -48,6 +48,8 @@ typedef struct s_map
 	t_rgb		*floor;
 	t_rgb		*ceiling;
 	t_direction	starting_direction;
+	int			start_x;
+	int			start_y;
 }	t_map;
 
 typedef struct s_image
@@ -66,22 +68,34 @@ typedef struct s_game
 	t_map		*map;
 }	t_game;
 
+typedef struct s_elem
+{
+    char *id;
+    char **target;
+} t_elem;
+
 //--------------------------PARSING-----------------------
-bool	check_map_extension(char *filename);
+bool	check_extension(char *filename, char *extension);
 bool	check_if_map_is_valid(char *filename, t_game *game);
 int		get_map_details(t_game *game, char *filename);
+int		filter_rgb(char **arr, t_game *game);
+
 //ver se realmente tem de ficar aqui no header ou se e so static
-bool	check_maze_borders(char **grid);
 bool	check_maze(t_game *game);
-int		check_maze_chars(char **grid);
 bool	store_maze(t_game *game, char *full_line);
+bool	flood_fill_prep(t_map *map);
+
 
 //--------------------------UTILS-----------------------
 void	clear_matriz(char **matriz);
 void	print_error(char *msg);
 void	clear_game(t_game *game);
 size_t	array_len(char **array);
-size_t	ft_strlen_without_space(const char *s);
-char	*ft_strjoin3(char *s1, char *s2); //mudar esse nome dps
+int		ft_strcmp(char *s1, char *s2);
+bool	check_full_line(char *full_line);
+char	*ft_strjoin_and_free(char *s1, char *s2);
+bool	check_empty_line_on_map(char *full_line);
+bool	check_extension(char *filename, char *extension);
+
 
 #endif
