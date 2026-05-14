@@ -45,6 +45,7 @@ int	main(int argc, char **argv)
 		return (clear_game(game), 1);
 	printf("passou pelo parsing\n");
 	clear_game(game);
+	return (0);
 }
 
 	// printf("EA: %s\n", (char *)game->img.east);

@@ -84,7 +84,8 @@ int		filter_rgb(char **arr, t_game *game);
 bool	check_maze(t_game *game);
 bool	store_maze(t_game *game, char *full_line);
 bool	flood_fill_prep(t_map *map);
-
+void	get_starting_info(t_game *game);
+char	*get_validated_full_line(char *full_line);
 
 //--------------------------UTILS-----------------------
 void	clear_matriz(char **matriz);
