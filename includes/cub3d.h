@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klino-an <klino-an@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 01:10:41 by kelle             #+#    #+#             */
-/*   Updated: 2026/04/16 18:30:49 by klino-an         ###   ########.fr       */
+/*   Updated: 2026/05/15 18:52:48 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@
 # include <time.h>
 # include <errno.h> 
 
+# define PX 128
 # define ALLOC_ERR "Memory allocation failed"
 # define RGB_DIGIT_ERR "RGB must only have digits"
 # define RGB_RANGE_ERR "RGB values must be between 0 to 255 range"
+# define MLX "MLX initialization failed"
+# define MLX_WIN "Window creation failed"
 
 typedef void*	t_sprite;
 
