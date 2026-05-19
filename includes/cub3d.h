@@ -68,6 +68,8 @@ typedef struct s_game
 	t_image		img;
 	void		*mlx;
 	void		*win;
+	int			win_w;
+	int			win_h;
 	t_map		*map;
 }	t_game;
 

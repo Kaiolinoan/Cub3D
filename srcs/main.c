@@ -31,24 +31,61 @@ static int	finish_game(void *param)
 	return (0);
 }
 
+// int draw_plain(t_game *game)
+// {
+// 	void *img;
+
+// 	img = mlx_new_image(game->mlx, game->win_w, game->win_h);
+// 	if (!img)
+// 		return (print_error("Image initialization failed"), 0);
+	
+// }
+void sla(t_game *game, size_t x, size_t y)
+{
+	int size = 64;
+	void *ptr = mlx_xpm_file_to_image(game->mlx, "assets/sprite.xpm", &size, &size);
+	if (!ptr)
+		return (print_error(MLX));
+	if (game->map->grid[y][x] == '1')
+		mlx_put_image_to_window(game->mlx, game->win, ptr, x * 64, y * 64);
+}
+
+int render(t_game *game)
+{
+	size_t i;
+	size_t j;
+
+	i = 0;
+	while (game->map->grid[i])
+	{
+		j = 0;
+		while (game->map->grid[i][j])
+		{
+			sla(game, j, i);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
 static void	mlx_main(t_game *game)
 {
 	int	screen_w;
 	int	screen_h;
-	int	win_w;
-	int	win_h;
 
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		return (print_error(MLX), clear_game(game));
 	mlx_get_screen_size(game->mlx, &screen_w, &screen_h);
-	win_w = screen_w / 1.5;
-	win_h = screen_h / 1.5;
-	game->win = mlx_new_window(game->mlx, win_w, win_h, "Cub3D");
+	game->win_w = screen_w / 1.5;
+	game->win_h = screen_h / 1.5;
+	game->win = mlx_new_window(game->mlx, game->win_w, game->win_h, "Cub3D");
 	if (!game->win)
 		return (print_error(MLX_WIN), clear_game(game));
 	mlx_key_hook(game->win, key_inputs, game);
 	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, finish_game, game);
+	// mlx_loop_hook(game->mlx, &render, game);
 	mlx_loop(game->mlx);
 }
 
@@ -62,6 +99,8 @@ static t_game	*initialize_game(char *filename)
 	game->map = ft_calloc(1, sizeof(t_map));
 	if (!game->map)
 		return (clear_game(game), print_error(ALLOC_ERR), NULL);
+	// game->map->ceiling = NULL;
+	// game->map->floor = NULL;
 	if (!get_map_details(game, filename))
 		return (clear_game(game), NULL);
 	return (game);
