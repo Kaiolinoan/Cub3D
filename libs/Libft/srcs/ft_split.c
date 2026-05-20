@@ -100,13 +100,9 @@ char	**ft_split(char const *s, char c)
 {
 	size_t	total_words;
 	char	**matriz;
-	char	**p;
 
 	if (!s)
-	{
-		p = malloc(0);
-		return (p);
-	}
+		return (NULL);
 	total_words = count_words(s, c);
 	matriz = malloc((total_words + 1) * sizeof(char *));
 	if (!matriz)

@@ -35,7 +35,9 @@ LIBFT		= $(LIBFTDIR)libft.a
 # =============================== COMPILER ================================== #
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g3
+CFLAGS			= -Wall -Wextra -Werror \
+          -Wno-incompatible-pointer-types \
+          -Wno-cast-function-type  -g3#-Wall -Wextra -Werror -g3 -Wno-cast-function-type #tirar a ultima flag
 MLX_FLAGS = -L$(MLIBXDIR) -lmlx -lXext -lX11 -lm -lz
 RM				= rm -f
 MAKE			= make
