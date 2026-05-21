@@ -37,14 +37,24 @@ size_t	array_len(char **array)
 	return (i);
 }
 
+void clear_images(t_game *game)
+{
+	mlx_destroy_image(game->mlx, game->buffer.img);
+	mlx_destroy_image(game->mlx, game->sprites.east.img.img);
+	mlx_destroy_image(game->mlx, game->sprites.west.img.img);
+	mlx_destroy_image(game->mlx, game->sprites.north.img.img);
+	mlx_destroy_image(game->mlx, game->sprites.south.img.img);
+}
+
 void	clear_game(t_game *game)
 {
 	if (!game)
 		return;
-	free(game->img.east);
-	free(game->img.west);
-	free(game->img.north);
-	free(game->img.south);
+	clear_images(game);
+	free(game->sprites.east.path);
+	free(game->sprites.west.path);
+	free(game->sprites.north.path);
+	free(game->sprites.south.path);
 	if (game->map)
 	{
 		free(game->map->floor);
@@ -57,4 +67,35 @@ void	clear_game(t_game *game)
 	if (game->mlx)
 		(mlx_destroy_display(game->mlx), free(game->mlx));
 	free(game);
+}
+
+void remove_new_line_in_array(char **arr)
+{
+	size_t i;
+	size_t j;
+
+	i = 0;
+	while (arr[i])
+	{
+		j = 0;
+		while(arr[i][j])
+		{
+			if (arr[i][j] == '\n')
+				arr[i][j] = '\0';
+			j++;
+		}
+		i++;
+	}
+}
+void remove_new_line(char *str)
+{
+	size_t i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			str[i] = '\0';
+		i++;
+	}
 }

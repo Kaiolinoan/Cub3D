@@ -1,7 +1,7 @@
-SO ./textures/Wall7.xpm   
-WE ./textures/Wall4.xpm
-NO ./textures/Wall2.xpm
-EA ./textures/Wall8.xpm
+WE assets/square-64.xpm
+SO assets/black_square-64.xpm
+NO assets/square-64.xpm
+EA assets/square-64.xpm
 
 C 0,0,0          
 F 220,100,0        

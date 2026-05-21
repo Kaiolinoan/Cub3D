@@ -74,10 +74,8 @@ bool	check_extension(char *filename, char *extension)
 	last_dot = ft_strrchr(filename, '.');
 	if (!last_dot)
 		return (false);
-	char *dot_trimmed = ft_strtrim(last_dot, "\n");
-	if (!dot_trimmed)
-		return (print_error(ALLOC_ERR), false);
-	if (!ft_strcmp(dot_trimmed, extension))
-		return (free(dot_trimmed), true);
-	return (free(dot_trimmed), false);
+	remove_new_line(last_dot);
+	if (!ft_strcmp(last_dot, extension))
+		return (true);
+	return (false);
 }

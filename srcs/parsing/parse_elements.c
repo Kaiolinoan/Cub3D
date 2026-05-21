@@ -22,13 +22,13 @@ static t_elem *init_elements(t_game *game)
 	static t_elem elements[5];
 
 	elements[0].id = "NO";
-	elements[0].target = (char **)&game->img.north;
+	elements[0].target = (char **)&game->sprites.north.path;
 	elements[1].id = "SO";
- 	elements[1].target = (char **)&game->img.south;
+ 	elements[1].target = (char **)&game->sprites.south.path;
 	elements[2].id = "WE";
-	elements[2].target = (char **)&game->img.west;
+	elements[2].target = (char **)&game->sprites.west.path;
 	elements[3].id = "EA";
-	elements[3].target = (char **)&game->img.east;
+	elements[3].target = (char **)&game->sprites.east.path;
 	elements[4].id = NULL;
 	elements[4].target = NULL;
 
@@ -72,6 +72,7 @@ static int	check_and_assign_coordinate(t_game *g, char *line)
 	arr = ft_split(line, ' ');
 	if (!arr || !*arr || !arr[1])
 		return (clear_matriz(arr), print_error("Invalid element"), -1);
+	remove_new_line(arr);
 	tmp = filter_element(arr, g);
 	clear_matriz(arr);
 	if (tmp < 0)

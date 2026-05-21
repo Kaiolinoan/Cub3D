@@ -21,7 +21,10 @@
 #include <time.h>
 #include <errno.h>
 
-#define PX 128
+#define PX 64
+// #define WIDTH 
+// #define HEIGHT
+
 #define ALLOC_ERR "Memory allocation failed"
 #define RGB_DIGIT_ERR "RGB must only have digits"
 #define RGB_RANGE_ERR "RGB values must be between 0 to 255 range"
@@ -29,8 +32,6 @@
 #define MLX_WIN "Window creation failed"
 #define MLX_IMG "Image initialization failed"
 #define MLX_ADDR "Failed to get image adress"
-
-typedef void *t_sprite;
 
 typedef struct s_img
 {
@@ -66,22 +67,29 @@ typedef struct s_map
 	int start_y;
 } t_map;
 
-typedef struct s_image
+typedef struct s_texture
 {
-	t_sprite north;
-	t_sprite south;
-	t_sprite west;
-	t_sprite east;
-} t_image;
+	void *path;
+	t_img img;
+}	t_texture;
+
+typedef struct s_sprites
+{
+	t_texture north;
+	t_texture south;
+	t_texture west;
+	t_texture east;
+} t_sprites;
 
 typedef struct s_game
 {
-	t_image img;
-	void *mlx;
-	void *win;
-	int win_w;
-	int win_h;
-	t_map *map;
+	t_sprites	sprites;
+	t_img 		buffer;
+	void		*mlx;
+	void		*win;
+	int			win_w;
+	int			win_h;
+	t_map		*map;
 } t_game;
 
 typedef struct s_elem
@@ -113,5 +121,7 @@ bool check_full_line(char *full_line);
 char *ft_strjoin_and_free(char *s1, char *s2);
 bool check_empty_line_on_map(char *full_line);
 bool check_extension(char *filename, char *extension);
+void remove_new_line_in_array(char **arr);
+void remove_new_line(char *str);
 
 #endif

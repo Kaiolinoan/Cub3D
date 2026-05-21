@@ -40,74 +40,93 @@ void my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	dst = img->addr + offset;
 	*(unsigned int *)dst = color;
 }
-
-int draw_plain(t_game *game)
+void draw_texture(t_img *img, t_img sprite, int x, int y)
 {
-	t_img img;
+	int size;
+	int tex_y;
+	int tex_x;
 
-	img.img = mlx_new_image(game->mlx, game->win_w, game->win_h);
-	if (!img.img)
-		return (print_error(MLX_IMG), 0);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	if (!img.addr)
-		return (print_error(MLX_ADDR), 0);
-	int y = 0;
-	int x = 0;
+	tex_y= 0;
+	size = PX;
+	while (tex_y < size)
+	{
+		tex_x = 0;
+		while (tex_x < size)
+		{
+			int offset = (tex_y * sprite.line_length) + (tex_x * sprite.bits_per_pixel / 8);
+			unsigned int color = *(unsigned int *)(sprite.addr + offset);
+			my_mlx_pixel_put(img, tex_x + x, tex_y + y, color);
+			tex_x++;
+		}
+		tex_y++;
+	}
+}
+void prepare_to_draw(t_game *game, t_img *img)
+{
+	char **map;
+	size_t y;
+	size_t x;
+
+	y = 0;
+	map = game->map->grid;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == '1')
+				draw_texture(img, game->sprites.east.img, x * PX , y * PX);
+			else if (map[y][x] == 'N')
+				draw_texture(img, game->sprites.south.img, x * PX , y * PX);
+			x++;
+		}
+		y++;
+	}
+}
+void paint_background(t_game *game, t_img *img)
+{
+	int y;
+	int x;
+
+	y = 0;
 	while (y < game->win_h)
 	{
 		x = 0;
 		while (x < game->win_w)
 		{
-			my_mlx_pixel_put(&img, x, y, 0x00666666);
+			my_mlx_pixel_put(img, x, y, 0x00666666);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(game->mlx, game->win, img.img, 0, 0);
+}
+int render(t_game *game)
+{
+	paint_background(game, &game->buffer.img);
+	prepare_to_draw(game, &game->buffer.img);
+	mlx_put_image_to_window(game->mlx, game->win, game->buffer.img, 0, 0);
 	return (0);
 }
 
-void handle_wall(t_game *game, )
+bool initialize_images(t_game *game)
 {
-	t_img sprite;
-	void *ptr;
 	int size;
 
-	size = 64;
-	sprite.img = mlx_xpm_file_to_image(game->mlx, "assets/square-64.xpm", &size, &size);
-	if (!ptr)
-		return (print_error(MLX_IMG));
-	sprite.addr = mlx_get_data_addr(sprite.img, &sprite.bits_per_pixel, &sprite.line_length, &sprite.endian);
-	if (!sprite.img)
-		print_error(MLX_ADDR);
-}
-
-void sla(t_game *game, size_t x, size_t y)
-{
-	(void)x;
-	(void)y;
-	if (game->map->grid[y][x] == '1')
-		handle_wall(game);
-	// mlx_put_image_to_window(game->mlx, game->win, ptr, x * 64, y * 64);
-}
-
-int render(t_game *game)
-{
-	size_t i;
-	size_t j;
-
-	i = 0;
-	draw_plain(game);
-	while (game->map->grid[i])
-	{
-		j = 0;
-		while (game->map->grid[i][j])
-		{
-			sla(game, j, i);
-			j++;
-		}
-		i++;
-	}
+	size = PX; //separar esta funcao em duas dps
+	game->buffer.img = mlx_new_image(game->mlx, game->win_w, game->win_h);
+	game->sprites.east.img.img = mlx_xpm_file_to_image(game->mlx, game->sprites.east.path, &size, &size);
+	game->sprites.west.img.img = mlx_xpm_file_to_image(game->mlx, game->sprites.west.path, &size, &size);
+	game->sprites.north.img.img = mlx_xpm_file_to_image(game->mlx, game->sprites.north.path, &size, &size);
+	game->sprites.south.img.img = mlx_xpm_file_to_image(game->mlx, game->sprites.south.path, &size, &size);
+	if (!game->buffer.img || !game->sprites.east.img.img || !game->sprites.west.img.img || !game->sprites.north.img.img || !game->sprites.south.img.img)
+		return (print_error(MLX_IMG), 0);
+	game->buffer.addr = mlx_get_data_addr(game->buffer.img, &game->buffer.bits_per_pixel, &game->buffer.line_length, &game->buffer.endian);
+	game->sprites.east.img.addr = mlx_get_data_addr(game->sprites.east.img.img, &game->sprites.east.img.bits_per_pixel, &game->sprites.east.img.line_length, &game->sprites.east.img.endian);
+	game->sprites.west.img.addr = mlx_get_data_addr(game->sprites.west.img.img, &game->sprites.west.img.bits_per_pixel, &game->sprites.west.img.line_length, &game->sprites.west.img.endian);
+	game->sprites.north.img.addr = mlx_get_data_addr(game->sprites.north.img.img, &game->sprites.north.img.bits_per_pixel, &game->sprites.north.img.line_length, &game->sprites.north.img.endian);
+	game->sprites.south.img.addr = mlx_get_data_addr(game->sprites.south.img.img, &game->sprites.south.img.bits_per_pixel, &game->sprites.south.img.line_length, &game->sprites.south.img.endian);
+	if (!game->buffer.addr || !game->sprites.east.img.addr || !game->sprites.west.img.addr || !game->sprites.north.img.addr || !game->sprites.south.img.addr)
+		return (print_error(MLX_ADDR)), 0;
 	return (1);
 }
 
@@ -125,6 +144,8 @@ static void mlx_main(t_game *game)
 	game->win_w = ft_strlen(*game->map->grid) * 64;
 	game->win_h = array_len(game->map->grid) * 64;
 	game->win = mlx_new_window(game->mlx, game->win_w, game->win_h, "Cub3D");
+	if (!initialize_images(game))
+		return ;
 	if (!game->win)
 		return (print_error(MLX_WIN), clear_game(game));
 	mlx_key_hook(game->win, key_inputs, game);
@@ -161,15 +182,16 @@ int main(int argc, char **argv)
 		return (1);
 	if (!check_if_map_is_valid(argv[1], game))
 		return (clear_game(game), 1);
-	printf("passou pelo parsing\n");
+	// printf("passou pelo parsing\n");
+	printf("EA: %s\n", (char *)game->sprites.east.path);
+	printf("WE: %s\n", (char *)game->sprites.west.path);
+	printf("SO: %s\n", (char *)game->sprites.south.path);
+	printf("NO: %s\n", (char *)game->sprites.north.path);
+	printf("C: %d, %d, %d\n", game->map->ceiling->r, game->map->ceiling->g, game->map->ceiling->b);
+	printf("F: %d, %d, %d\n", game->map->floor->r, game->map->floor->g, game->map->floor->b);
 	mlx_main(game);
 	clear_game(game);
 	return (0);
 }
 
-// printf("EA: %s\n", (char *)game->img.east);
-// printf("WE: %s\n", (char *)game->img.west);
-// printf("SO: %s\n", (char *)game->img.south);
-// printf("NO: %s\n", (char *)game->img.north);
-// printf("C: %d, %d, %d\n", game->map->ceiling->r, game->map->ceiling->g, game->map->ceiling->b);
-// printf("F: %d, %d, %d\n", game->map->floor->r, game->map->floor->g, game->map->floor->b);
+
