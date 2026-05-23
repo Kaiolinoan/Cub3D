@@ -23,88 +23,11 @@ static int key_inputs(int keycode, void *param)
 	return (0);
 }
 
-static int finish_game(void *param)
+int finish_game(void *param)
 {
 	t_game *game = param;
 	clear_game(game);
 	exit(EXIT_SUCCESS);
-	return (0);
-}
-
-void my_mlx_pixel_put(t_img *img, int x, int y, int color)
-{
-	char *dst;
-	int offset;
-
-	offset = (y * img->line_length + x * (img->bits_per_pixel / 8));
-	dst = img->addr + offset;
-	*(unsigned int *)dst = color;
-}
-void draw_texture(t_img *img, t_img sprite, int x, int y)
-{
-	int size;
-	int tex_y;
-	int tex_x;
-
-	tex_y= 0;
-	size = PX;
-	while (tex_y < size)
-	{
-		tex_x = 0;
-		while (tex_x < size)
-		{
-			int offset = (tex_y * sprite.line_length) + (tex_x * sprite.bits_per_pixel / 8);
-			unsigned int color = *(unsigned int *)(sprite.addr + offset);
-			my_mlx_pixel_put(img, tex_x + x, tex_y + y, color);
-			tex_x++;
-		}
-		tex_y++;
-	}
-}
-void prepare_to_draw(t_game *game, t_img *img)
-{
-	char **map;
-	size_t y;
-	size_t x;
-
-	y = 0;
-	map = game->map->grid;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x])
-		{
-			if (map[y][x] == '1')
-				draw_texture(img, game->sprites.east.img, x * PX , y * PX);
-			else if (map[y][x] == 'N')
-				draw_texture(img, game->sprites.south.img, x * PX , y * PX);
-			x++;
-		}
-		y++;
-	}
-}
-void paint_background(t_game *game, t_img *img)
-{
-	int y;
-	int x;
-
-	y = 0;
-	while (y < game->win_h)
-	{
-		x = 0;
-		while (x < game->win_w)
-		{
-			my_mlx_pixel_put(img, x, y, 0x00666666);
-			x++;
-		}
-		y++;
-	}
-}
-int render(t_game *game)
-{
-	paint_background(game, &game->buffer.img);
-	prepare_to_draw(game, &game->buffer.img);
-	mlx_put_image_to_window(game->mlx, game->win, game->buffer.img, 0, 0);
 	return (0);
 }
 
@@ -146,10 +69,13 @@ static void mlx_main(t_game *game)
 	game->win = mlx_new_window(game->mlx, game->win_w, game->win_h, "Cub3D");
 	if (!initialize_images(game))
 		return ;
+	initialize_player(game, &game->player);
 	if (!game->win)
 		return (print_error(MLX_WIN), clear_game(game));
 	mlx_key_hook(game->win, key_inputs, game);
-	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, (int (*)())finish_game, game);
+	mlx_hook(game->win, KeyPress, KeyPressMask, player_moving, game);
+	mlx_hook(game->win, KeyRelease, KeyReleaseMask, player_idle, game);
+	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, finish_game, game);
 	mlx_loop_hook(game->mlx, &render, game);
 	mlx_loop(game->mlx);
 }
@@ -164,8 +90,6 @@ static t_game *initialize_game(char *filename)
 	game->map = ft_calloc(1, sizeof(t_map));
 	if (!game->map)
 		return (clear_game(game), print_error(ALLOC_ERR), NULL);
-	// game->map->ceiling = NULL;
-	// game->map->floor = NULL;
 	if (!get_map_details(game, filename))
 		return (clear_game(game), NULL);
 	return (game);
@@ -183,12 +107,12 @@ int main(int argc, char **argv)
 	if (!check_if_map_is_valid(argv[1], game))
 		return (clear_game(game), 1);
 	// printf("passou pelo parsing\n");
-	printf("EA: %s\n", (char *)game->sprites.east.path);
-	printf("WE: %s\n", (char *)game->sprites.west.path);
-	printf("SO: %s\n", (char *)game->sprites.south.path);
-	printf("NO: %s\n", (char *)game->sprites.north.path);
-	printf("C: %d, %d, %d\n", game->map->ceiling->r, game->map->ceiling->g, game->map->ceiling->b);
-	printf("F: %d, %d, %d\n", game->map->floor->r, game->map->floor->g, game->map->floor->b);
+	// printf("EA: %s\n", (char *)game->sprites.east.path);
+	// printf("WE: %s\n", (char *)game->sprites.west.path);
+	// printf("SO: %s\n", (char *)game->sprites.south.path);
+	// printf("NO: %s\n", (char *)game->sprites.north.path);
+	// printf("C: %d, %d, %d\n", game->map->ceiling->r, game->map->ceiling->g, game->map->ceiling->b);
+	// printf("F: %d, %d, %d\n", game->map->floor->r, game->map->floor->g, game->map->floor->b);
 	mlx_main(game);
 	clear_game(game);
 	return (0);

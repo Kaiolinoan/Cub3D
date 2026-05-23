@@ -17,11 +17,14 @@
 #include <X11/X.h>
 #include <X11/keysym.h>
 #include <mlx.h>
+#include <math.h>
 #include <stdbool.h>
 #include <time.h>
 #include <errno.h>
 
 #define PX 64
+#define RED 0xFFFF0000
+#define GREY 0x00666666
 // #define WIDTH 
 // #define HEIGHT
 
@@ -62,7 +65,6 @@ typedef struct s_map
 	char **grid;
 	t_rgb *floor;
 	t_rgb *ceiling;
-	t_direction starting_direction;
 	int start_x;
 	int start_y;
 } t_map;
@@ -81,8 +83,26 @@ typedef struct s_sprites
 	t_texture east;
 } t_sprites;
 
+typedef struct s_player
+{
+	float player_x;
+	float player_y;
+	float dir_x;
+	float dir_y;
+
+	bool up;
+	bool down;
+	bool left;
+	bool right;
+
+	bool rotate_l;
+	bool rotate_r;
+	t_direction starting_direction;
+}	t_player;
+
 typedef struct s_game
 {
+	t_player	player;
 	t_sprites	sprites;
 	t_img 		buffer;
 	void		*mlx;
@@ -111,6 +131,16 @@ bool flood_fill_prep(t_map *map);
 void get_starting_info(t_game *game);
 char *get_validated_full_line(char *full_line);
 
+//--------------------------GAME-----------------------
+int render(t_game *game);
+void draw_texture(t_img *img, t_img sprite, float x, float y, int size);
+void render_player(t_game *game,t_img *img);
+int player_moving(int keycode, void *param);
+int player_idle(int keycode, void *param);
+void my_pixel_put(t_img *img, int x, int y, int color);
+void initialize_player(t_game *game, t_player *player);
+
+
 //--------------------------UTILS-----------------------
 void clear_matriz(char **matriz);
 void print_error(char *msg);
@@ -123,5 +153,6 @@ bool check_empty_line_on_map(char *full_line);
 bool check_extension(char *filename, char *extension);
 void remove_new_line_in_array(char **arr);
 void remove_new_line(char *str);
+int finish_game(void *param);
 
 #endif

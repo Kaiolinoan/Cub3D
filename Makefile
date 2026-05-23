@@ -12,6 +12,7 @@ LIBFTDIR 	= $(LIBSDIR)Libft/
 MLIBXDIR 	= $(LIBSDIR)minilibx-linux/
 INCLUDE 	= -I$(INCDIR)
 PARSEDIR	= parsing/
+GAMEDIR		= game/
 UTILSDIR	= utils/
 
 # ================================= FILES =================================== #
@@ -19,9 +20,11 @@ UTILSDIR	= utils/
 SRC_FILES	= main.c 
 UTILS_FILES	= utils.c parse_utils.c
 PARSE_FILES = parse_elements.c parse_map.c parse_rgb.c flood_fill.c get_infos.c
+GAME_FILES 	= render.c player.c
 
 SRC = $(addprefix $(SRCDIR), $(SRC_FILES)) \
 	  $(addprefix $(SRCDIR)$(PARSEDIR), $(PARSE_FILES)) \
+	  $(addprefix $(SRCDIR)$(GAMEDIR), $(GAME_FILES))   \
 	  $(addprefix $(SRCDIR)$(UTILSDIR), $(UTILS_FILES)) 
 
 # ================================ OBJECTS =================================== #
