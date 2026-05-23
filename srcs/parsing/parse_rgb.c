@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_rgb.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/23 02:47:46 by kelle             #+#    #+#             */
+/*   Updated: 2026/05/23 02:48:40 by kelle            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-static int comma_count(char *str)
+static int	comma_count(char *str)
 {
-	size_t i;
-	size_t count;
+	size_t	i;
+	size_t	count;
 
 	i = 0;
 	count = 0;
@@ -13,7 +25,7 @@ static int comma_count(char *str)
 			count++;
 		i++;
 	}
-	return(count);
+	return (count);
 }
 
 static bool	fill_rgb(t_game *game, char **rgb, bool is_floor)
@@ -48,7 +60,7 @@ static bool	parse_and_fill_rgb(t_game *game, char **coord, bool is_floor)
 
 	str = ft_strtrim(coord[1], "\n");
 	if (!str)
-		return(print_error(ALLOC_ERR), false);
+		return (print_error(ALLOC_ERR), false);
 	rgb = ft_split(str, ',');
 	if (!rgb || !*rgb || !rgb[1] || !rgb[2] || rgb[3] || comma_count(str) != 2)
 		return (free(str), print_error("Invalid RGB"), clear_matriz(rgb), 0);
@@ -68,7 +80,7 @@ static bool	parse_and_fill_rgb(t_game *game, char **coord, bool is_floor)
 	return (clear_matriz(rgb), true);
 }
 
-int filter_rgb(char **arr, t_game *game)
+int	filter_rgb(char **arr, t_game *game)
 {
 	if (!ft_strncmp(*arr, "C", 2))
 	{
@@ -78,7 +90,7 @@ int filter_rgb(char **arr, t_game *game)
 				return (1);
 			return (-2);
 		}
-        return (print_error("Double definition of element"), -1);
+		return (print_error("Double definition of element"), -1);
 	}
 	if (!ft_strncmp(*arr, "F", 2))
 	{

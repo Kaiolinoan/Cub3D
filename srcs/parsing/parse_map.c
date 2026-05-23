@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/23 02:46:11 by kelle             #+#    #+#             */
+/*   Updated: 2026/05/23 02:47:39 by kelle            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	check_maze_chars(char **grid)
@@ -13,7 +25,8 @@ static int	check_maze_chars(char **grid)
 		j = 0;
 		while (grid[i][j])
 		{
-			if (grid[i][j] && grid[i][j] != '0' && grid[i][j] != '1' && grid[i][j] != ' ')
+			if (grid[i][j] && grid[i][j] != '0' && grid[i][j] != '1'
+				&& grid[i][j] != ' ')
 			{
 				if (grid[i][j] == 'N' || grid[i][j] == 'S'
 					|| grid[i][j] == 'W' || grid[i][j] == 'E')
@@ -34,7 +47,7 @@ bool	store_maze(t_game *game, char *full_line)
 	int		size;
 	int		i;
 
-	full_line = get_validated_full_line(full_line);	
+	full_line = get_validated_full_line(full_line);
 	if (!full_line)
 		return (false);
 	temp = ft_split(full_line, '\n');

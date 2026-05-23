@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_elements.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/23 02:44:01 by kelle             #+#    #+#             */
+/*   Updated: 2026/05/23 02:45:59 by kelle            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	get_file_fd(char *filename)
@@ -16,31 +28,29 @@ static int	get_file_fd(char *filename)
 	return (fd);
 }
 
-static t_elem *init_elements(t_game *game)
+static t_elem	*init_elements(t_game *game)
 {
-
-	static t_elem elements[5];
+	static t_elem	elements[5];
 
 	elements[0].id = "NO";
 	elements[0].target = (char **)&game->sprites.north.path;
 	elements[1].id = "SO";
- 	elements[1].target = (char **)&game->sprites.south.path;
+	elements[1].target = (char **)&game->sprites.south.path;
 	elements[2].id = "WE";
 	elements[2].target = (char **)&game->sprites.west.path;
 	elements[3].id = "EA";
 	elements[3].target = (char **)&game->sprites.east.path;
 	elements[4].id = NULL;
 	elements[4].target = NULL;
-
 	return (elements);
 }
 
-static int filter_element(char **arr, t_game *game)
+static int	filter_element(char **arr, t_game *game)
 {
-	t_elem *elements;
-	int i;
+	t_elem	*elements;
+	int		i;
 
-	i= 0;
+	i = 0;
 	elements = init_elements(game);
 	while (elements[i].id)
 	{
@@ -49,7 +59,7 @@ static int filter_element(char **arr, t_game *game)
 			if (*(elements[i].target))
 				return (print_error("Double definition of element"), -1);
 			else if (!check_extension(arr[1], ".xpm"))
-				return (print_error("Element has an invalid extension") ,-2);
+				return (print_error("Element has an invalid extension"), -2);
 			return (*(elements[i].target) = ft_strdup(arr[1]), 1);
 		}
 		i++;
@@ -59,10 +69,11 @@ static int filter_element(char **arr, t_game *game)
 
 static int	check_and_assign_coordinate(t_game *g, char *line)
 {
-	int tmp;
-	static int count = 0;
+	int			tmp;
+	static int	count;
 	char		**arr;
 
+	count = 0;
 	if (count == 6)
 		return (count);
 	if (!line)

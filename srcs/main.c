@@ -6,15 +6,17 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 01:10:31 by kelle             #+#    #+#             */
-/*   Updated: 2026/05/15 19:14:48 by kelle            ###   ########.fr       */
+/*   Updated: 2026/05/23 02:24:37 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int key_inputs(int keycode, void *param)
+static int	key_inputs(int keycode, void *param)
 {
-	t_game *game = param;
+	t_game	*game;
+
+	game = param;
 	if (keycode == XK_Escape)
 	{
 		clear_game(game);
@@ -23,40 +25,59 @@ static int key_inputs(int keycode, void *param)
 	return (0);
 }
 
-int finish_game(void *param)
+int	finish_game(void *param)
 {
-	t_game *game = param;
+	t_game	*game;
+
+	game = param;
 	clear_game(game);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
 
-bool initialize_images(t_game *game)
+static void	file_to_image(void *mlx, t_texture *dir)
 {
-	int size;
+	int	size;
 
-	size = PX; //separar esta funcao em duas dps
+	size = PX;
+	dir->img.img = mlx_xpm_file_to_image(mlx, dir->path, &size, &size);
+}
+
+static void	get_dir_img_address(t_texture *dir)
+{
+	dir->img.addr = mlx_get_data_addr(dir->img.img, &dir->img.bits_per_pixel,
+			&dir->img.line_length, &dir->img.endian);
+}
+
+bool	initialize_images(t_game *game)
+{
 	game->buffer.img = mlx_new_image(game->mlx, game->win_w, game->win_h);
-	game->sprites.east.img.img = mlx_xpm_file_to_image(game->mlx, game->sprites.east.path, &size, &size);
-	game->sprites.west.img.img = mlx_xpm_file_to_image(game->mlx, game->sprites.west.path, &size, &size);
-	game->sprites.north.img.img = mlx_xpm_file_to_image(game->mlx, game->sprites.north.path, &size, &size);
-	game->sprites.south.img.img = mlx_xpm_file_to_image(game->mlx, game->sprites.south.path, &size, &size);
-	if (!game->buffer.img || !game->sprites.east.img.img || !game->sprites.west.img.img || !game->sprites.north.img.img || !game->sprites.south.img.img)
+	file_to_image(game->mlx, &game->sprites.east);
+	file_to_image(game->mlx, &game->sprites.west);
+	file_to_image(game->mlx, &game->sprites.north);
+	file_to_image(game->mlx, &game->sprites.south);
+	if (!game->buffer.img || !game->sprites.east.img.img
+		|| !game->sprites.west.img.img || !game->sprites.north.img.img
+		|| !game->sprites.south.img.img)
 		return (print_error(MLX_IMG), 0);
-	game->buffer.addr = mlx_get_data_addr(game->buffer.img, &game->buffer.bits_per_pixel, &game->buffer.line_length, &game->buffer.endian);
-	game->sprites.east.img.addr = mlx_get_data_addr(game->sprites.east.img.img, &game->sprites.east.img.bits_per_pixel, &game->sprites.east.img.line_length, &game->sprites.east.img.endian);
-	game->sprites.west.img.addr = mlx_get_data_addr(game->sprites.west.img.img, &game->sprites.west.img.bits_per_pixel, &game->sprites.west.img.line_length, &game->sprites.west.img.endian);
-	game->sprites.north.img.addr = mlx_get_data_addr(game->sprites.north.img.img, &game->sprites.north.img.bits_per_pixel, &game->sprites.north.img.line_length, &game->sprites.north.img.endian);
-	game->sprites.south.img.addr = mlx_get_data_addr(game->sprites.south.img.img, &game->sprites.south.img.bits_per_pixel, &game->sprites.south.img.line_length, &game->sprites.south.img.endian);
-	if (!game->buffer.addr || !game->sprites.east.img.addr || !game->sprites.west.img.addr || !game->sprites.north.img.addr || !game->sprites.south.img.addr)
-		return (print_error(MLX_ADDR)), 0;
+	game->buffer.addr = mlx_get_data_addr(game->buffer.img,
+			&game->buffer.bits_per_pixel, &game->buffer.line_length,
+			&game->buffer.endian);
+	get_dir_img_address(&game->sprites.east);
+	get_dir_img_address(&game->sprites.west);
+	get_dir_img_address(&game->sprites.north);
+	get_dir_img_address(&game->sprites.south);
+	if (!game->buffer.addr || !game->sprites.east.img.addr
+		|| !game->sprites.west.img.addr || !game->sprites.north.img.addr
+		|| !game->sprites.south.img.addr)
+			return (print_error(MLX_ADDR), 0);
 	return (1);
 }
 
-static void mlx_main(t_game *game)
+static void	mlx_main(t_game *game)
 {
-	int screen_w;
-	int screen_h;
+	int	screen_w;
+	int	screen_h;
 
 	game->mlx = mlx_init();
 	if (!game->mlx)
@@ -80,9 +101,9 @@ static void mlx_main(t_game *game)
 	mlx_loop(game->mlx);
 }
 
-static t_game *initialize_game(char *filename)
+static t_game	*initialize_game(char *filename)
 {
-	t_game *game;
+	t_game	*game;
 
 	game = ft_calloc(1, sizeof(t_game));
 	if (!game)
@@ -95,9 +116,9 @@ static t_game *initialize_game(char *filename)
 	return (game);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_game *game;
+	t_game	*game;
 
 	if (argc != 2)
 		return (print_error("Invalid argument"), 1);
@@ -117,5 +138,3 @@ int main(int argc, char **argv)
 	clear_game(game);
 	return (0);
 }
-
-

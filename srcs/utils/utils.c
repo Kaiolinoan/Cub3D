@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/23 02:51:13 by kelle             #+#    #+#             */
+/*   Updated: 2026/05/23 02:52:18 by kelle            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	clear_matriz(char **matriz)
@@ -37,7 +49,7 @@ size_t	array_len(char **array)
 	return (i);
 }
 
-void clear_images(t_game *game)
+void	clear_images(t_game *game)
 {
 	mlx_destroy_image(game->mlx, game->buffer.img);
 	mlx_destroy_image(game->mlx, game->sprites.east.img.img);
@@ -49,7 +61,7 @@ void clear_images(t_game *game)
 void	clear_game(t_game *game)
 {
 	if (!game)
-		return;
+		return ;
 	clear_images(game);
 	free(game->sprites.east.path);
 	free(game->sprites.west.path);
@@ -69,16 +81,16 @@ void	clear_game(t_game *game)
 	free(game);
 }
 
-void remove_new_line_in_array(char **arr)
+void	remove_new_line_in_array(char **arr)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	while (arr[i])
 	{
 		j = 0;
-		while(arr[i][j])
+		while (arr[i][j])
 		{
 			if (arr[i][j] == '\n')
 				arr[i][j] = '\0';
@@ -87,9 +99,10 @@ void remove_new_line_in_array(char **arr)
 		i++;
 	}
 }
-void remove_new_line(char *str)
+
+void	remove_new_line(char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])

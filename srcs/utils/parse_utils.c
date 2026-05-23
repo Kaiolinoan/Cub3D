@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/23 02:49:20 by kelle             #+#    #+#             */
+/*   Updated: 2026/05/23 02:50:57 by kelle            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-bool check_full_line(char *full_line)
+
+bool	check_full_line(char *full_line)
 {
 	int	i;
 
@@ -14,10 +27,11 @@ bool check_full_line(char *full_line)
 	}
 	return (false);
 }
-bool check_empty_line_on_map(char *full_line)
+
+bool	check_empty_line_on_map(char *full_line)
 {
-	int	i;
-	bool flag;
+	int		i;
+	bool	flag;
 
 	i = 0;
 	flag = 0;

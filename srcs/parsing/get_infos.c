@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_infos.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/23 02:43:10 by kelle             #+#    #+#             */
+/*   Updated: 2026/05/23 02:43:50 by kelle            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-static void get_starting_dir(int x, int y, t_player *player, t_map *map)
+static void	get_starting_dir(int x, int y, t_player *player, t_map *map)
 {
-	char **grid;
+	char	**grid;
 
 	grid = map->grid;
 	if (grid[x][y] == 'N')
@@ -14,11 +26,12 @@ static void get_starting_dir(int x, int y, t_player *player, t_map *map)
 	else if (grid[x][y] == 'S')
 		player->starting_direction = SOUTH;
 }
-void get_starting_info(t_game *game)
+
+void	get_starting_info(t_game *game)
 {
-	int i;
-	int j;
-	char **grid;
+	int		i;
+	int		j;
+	char	**grid;
 
 	i = 0;
 	grid = game->map->grid;
@@ -27,7 +40,8 @@ void get_starting_info(t_game *game)
 		j = 0;
 		while (grid[i][j])
 		{
-			if (grid[i][j] == 'N' || grid[i][j] == 'S' || grid[i][j] == 'W' || grid[i][j] == 'E')
+			if (grid[i][j] == 'N' || grid[i][j] == 'S' || grid[i][j] == 'W'
+				|| grid[i][j] == 'E')
 			{
 				game->map->start_x = j;
 				game->map->start_y = i;
@@ -39,9 +53,9 @@ void get_starting_info(t_game *game)
 	}
 }
 
-char *get_validated_full_line(char *full_line)
+char	*get_validated_full_line(char *full_line)
 {
-	char *new;
+	char	*new;
 
 	new = ft_strtrim(full_line, "\n");
 	free(full_line);
