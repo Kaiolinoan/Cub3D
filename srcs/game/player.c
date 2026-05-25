@@ -56,11 +56,20 @@ int	player_idle(int keycode, void *param)
 
 void	rotate(t_player *player, double rot)
 {
-	int	old_dir_x;
+	double	old_dir_x;
+	double	old_dir_y;
+	double	old_plane_x;
+	double	old_plane_y;
 
 	old_dir_x = player->dir_x;
-	player->dir_x = player->dir_x * cos(rot) - player->dir_y * sin(rot);
-	player->dir_y = old_dir_x * sin(rot) + player->dir_y * cos(rot);
+	old_dir_y = player->dir_y;
+	old_plane_x = player->plane_x;
+	old_plane_y = player->plane_y;
+
+	player->dir_x = old_dir_x * cos(rot) - old_dir_y * sin(rot);
+	player->dir_y = old_dir_x * sin(rot) + old_dir_y * cos(rot);
+	player->plane_x = old_plane_x * cos(rot) - old_plane_y * sin(rot);
+	player->plane_y = old_plane_x * sin(rot) + old_plane_y * cos(rot);
 }
 
 void	move_player(t_player *player)
@@ -68,7 +77,7 @@ void	move_player(t_player *player)
 	double	speed;
 	double	rot_speed;
 
-	speed = 0.5;
+	speed = 0.1;
 	rot_speed = 0.03;
 	if (player->up)
 	{
@@ -80,10 +89,16 @@ void	move_player(t_player *player)
 		player->player_x -= player->dir_x * speed;
 		player->player_y -= player->dir_y * speed;
 	}
-	// if (player->left)
-	//     player->player_x -= player->dir_x * speed;
-	// if (player->right)
-	//     player->player_x += player->dir_x * speed;
+	if (player->left)
+    {
+	    player->player_x -= player->plane_x * speed;
+	    player->player_y -= player->plane_y * speed;
+    }
+	if (player->right)
+    {
+	    player->player_x += player->plane_x * speed;
+	    player->player_y += player->plane_y * speed;
+    }
 	if (player->rotate_l)
 		rotate(player, -rot_speed);
 	if (player->rotate_r)
@@ -98,41 +113,70 @@ void	initialize_player(t_game *game, t_player *player)
 	{
 		player->dir_x = 0;
 		player->dir_y = -1;
+        player->plane_x = 0.66;
+        player->plane_y = 0;
 	}
 	if (player->starting_direction == SOUTH)
 	{
 		player->dir_x = 0;
 		player->dir_y = 1;
+        player->plane_x = -0.66;
+        player->plane_y = 0;
 	}
 	if (player->starting_direction == EAST)
 	{
 		player->dir_x = 1;
 		player->dir_y = 0;
+        player->plane_x = 0;
+        player->plane_y = 0.66;
 	}
 	if (player->starting_direction == WEST)
 	{
 		player->dir_x = -1;
 		player->dir_y = 0;
+        player->plane_x = 0;
+        player->plane_y = -0.66;
 	}
 }
 
-void	render_player(t_game *game, t_img *img)
+void print_rays(t_player *player, t_img *img)
 {
 	int	px;
 	int	py;
-	int	i;
-
-	move_player(&game->player);
-	px = game->player.player_x * PX;
-	py = game->player.player_y * PX;
-	my_pixel_put(img, px, py, RED);
-	i = 0;
+	px = player->player_x * PX * 1.025;
+	py = player->player_y * PX * 1.025;
+	double ray_x = player->dir_x - player->plane_x;
+	double ray_y = player->dir_y - player->plane_y;
+	double ray_x2 = player->dir_x + player->plane_x;
+	double ray_y2 = player->dir_y + player->plane_y;
+	int j = 0;
+	while (j < 200)
+	{
+		my_pixel_put(img, px + ray_x * j,
+			py + ray_y * j, RED);
+		j++;
+	}
+    int i = 0;
 	while (i < 200)
 	{
-		my_pixel_put(img, px + game->player.dir_x * i,
-			py + game->player.dir_y * i, RED);
+		my_pixel_put(img, px + ray_x2 * i,
+			py + ray_y2 * i, RED);
 		i++;
 	}
+		// i = 0;
+	// while (i < 200)
+	// {
+	// 	my_pixel_put(img, px + player->dir_x * i,
+	// 		py + player->dir_y * i, RED);
+	// 	i++;
+	// }
+}
+
+
+void	render_player(t_game *game, t_img *img)
+{
+	move_player(&game->player);
+	print_rays(&game->player, img);
 	draw_texture(img, game->sprites.south.img, game->player.player_x * PX,
 		game->player.player_y * PX, 20);
 }

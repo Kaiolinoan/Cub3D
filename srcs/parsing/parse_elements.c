@@ -73,7 +73,6 @@ static int	check_and_assign_coordinate(t_game *g, char *line)
 	static int	count;
 	char		**arr;
 
-	count = 0;
 	if (count == 6)
 		return (count);
 	if (!line)

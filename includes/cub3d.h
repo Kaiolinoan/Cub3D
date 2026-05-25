@@ -85,10 +85,12 @@ typedef struct s_sprites
 
 typedef struct s_player
 {
-	float player_x;
-	float player_y;
-	float dir_x;
-	float dir_y;
+	double player_x;
+	double player_y;
+	double dir_x;
+	double dir_y;
+	double plane_x;
+	double plane_y;
 
 	bool up;
 	bool down;
@@ -134,7 +136,7 @@ char *get_validated_full_line(char *full_line);
 //--------------------------GAME-----------------------
 int render(t_game *game);
 void draw_texture(t_img *img, t_img sprite, float x, float y, int size);
-void render_player(t_game *game,t_img *img);
+void render_player(t_game *game, t_img *img);
 int player_moving(int keycode, void *param);
 int player_idle(int keycode, void *param);
 void my_pixel_put(t_img *img, int x, int y, int color);
