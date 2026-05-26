@@ -141,7 +141,7 @@ int player_moving(int keycode, void *param);
 int player_idle(int keycode, void *param);
 void my_pixel_put(t_img *img, int x, int y, int color);
 void initialize_player(t_game *game, t_player *player);
-
+void move_player(t_player *player);
 
 //--------------------------UTILS-----------------------
 void clear_matriz(char **matriz);
@@ -156,5 +156,6 @@ bool check_extension(char *filename, char *extension);
 void remove_new_line_in_array(char **arr);
 void remove_new_line(char *str);
 int finish_game(void *param);
+double ft_abs(double num);
 
 #endif

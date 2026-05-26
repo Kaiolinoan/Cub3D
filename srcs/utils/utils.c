@@ -112,3 +112,10 @@ void	remove_new_line(char *str)
 		i++;
 	}
 }
+
+double ft_abs(double num)
+{
+	if (num < 0)
+		num = num * -1;
+	return (num);
+}
