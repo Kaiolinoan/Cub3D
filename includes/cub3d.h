@@ -25,6 +25,8 @@
 #define PX 64
 #define RED 0xFFFF0000
 #define GREY 0x00666666
+#define GREEN 0X0000FF00
+#define BLUE 0X000000FF
 // #define WIDTH 
 // #define HEIGHT
 

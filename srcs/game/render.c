@@ -72,11 +72,18 @@ static void	paint_background(t_game *game, t_img *img)
 	int	x;
 
 	y = 0;
+	while (y < game->win_h / 2)
+	{
+		x = 0;
+		while (x < game->win_w / 2)
+			my_pixel_put(img, x++, y, GREY);
+		y++;
+	}
 	while (y < game->win_h)
 	{
 		x = 0;
 		while (x < game->win_w)
-			my_pixel_put(img, x++, y, GREY);
+			my_pixel_put(img, x++, y, GREEN);
 		y++;
 	}
 }
