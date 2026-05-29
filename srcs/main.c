@@ -88,11 +88,11 @@ static void	mlx_main(t_game *game)
 	game->win_w = ft_strlen(*game->map->grid) * 64;
 	game->win_h = array_len(game->map->grid) * 64;
 	game->win = mlx_new_window(game->mlx, game->win_w, game->win_h, "Cub3D");
+	if (!game->win)
+		return (print_error(MLX_WIN), clear_game(game));
 	if (!initialize_images(game))
 		return ;
 	initialize_player(game, &game->player);
-	if (!game->win)
-		return (print_error(MLX_WIN), clear_game(game));
 	mlx_key_hook(game->win, key_inputs, game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, player_moving, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, player_idle, game);
@@ -127,13 +127,13 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!check_if_map_is_valid(argv[1], game))
 		return (clear_game(game), 1);
-	// printf("passou pelo parsing\n");
-	// printf("EA: %s\n", (char *)game->sprites.east.path);
-	// printf("WE: %s\n", (char *)game->sprites.west.path);
-	// printf("SO: %s\n", (char *)game->sprites.south.path);
-	// printf("NO: %s\n", (char *)game->sprites.north.path);
-	// printf("C: %d, %d, %d\n", game->map->ceiling->r, game->map->ceiling->g, game->map->ceiling->b);
-	// printf("F: %d, %d, %d\n", game->map->floor->r, game->map->floor->g, game->map->floor->b);
+		// printf("passou pelo parsing\n");
+		// printf("EA: %s\n", (char *)game->sprites.east.path);
+		// printf("WE: %s\n", (char *)game->sprites.west.path);
+		// printf("SO: %s\n", (char *)game->sprites.south.path);
+		// printf("NO: %s\n", (char *)game->sprites.north.path);
+		// printf("C: %d, %d, %d\n", game->map->ceiling->r, game->map->ceiling->g, game->map->ceiling->b);
+		// printf("F: %d, %d, %d\n", game->map->floor->r, game->map->floor->g, game->map->floor->b);
 	mlx_main(game);
 	clear_game(game);
 	return (0);

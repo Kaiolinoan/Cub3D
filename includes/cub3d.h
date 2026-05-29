@@ -122,6 +122,27 @@ typedef struct s_elem
 	char **target;
 } t_elem;
 
+typedef struct t_raycasting
+{
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	int		stepX;
+	int		stepY;
+	int		map_x;
+	int		map_y;
+	int		DrawEnd;
+	int		DrawStart;
+	int		side;
+	int		lineHeight;
+	bool	hit;
+} t_ray;
+
 //--------------------------PARSING-----------------------
 bool check_extension(char *filename, char *extension);
 bool check_if_map_is_valid(char *filename, t_game *game);
@@ -143,7 +164,9 @@ int player_moving(int keycode, void *param);
 int player_idle(int keycode, void *param);
 void my_pixel_put(t_img *img, int x, int y, int color);
 void initialize_player(t_game *game, t_player *player);
-void move_player(t_player *player);
+void move_player(t_game *game, t_player *player);
+int raycasting (t_game *game);
+
 
 //--------------------------UTILS-----------------------
 void clear_matriz(char **matriz);

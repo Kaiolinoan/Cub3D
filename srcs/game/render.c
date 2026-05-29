@@ -66,158 +66,120 @@ static void	render_wall(t_game *game, t_img *img)
 	}
 }
 
+int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+
 static void	paint_background(t_game *game, t_img *img)
+{
+	int	y;
+	int	x;
+	int c;
+	int f;
+
+	y = 0;
+	c = create_trgb(0, game->map->ceiling->r, game->map->ceiling->g, game->map->ceiling->b);
+	f = create_trgb(0, game->map->floor->r, game->map->floor->g, game->map->floor->b);
+	while (y < game->win_h)
+	{
+		x = 0;
+		while (x < game->win_w)
+		{
+			if (y < game->win_h / 2)
+				my_pixel_put(img, x, y, c);
+			else
+				my_pixel_put(img, x, y, f);
+			x++;
+		}
+		y++;
+	}
+}
+static void	paint_plain_background(t_game *game, t_img *img, int color)
 {
 	int	y;
 	int	x;
 
 	y = 0;
-	while (y < game->win_h / 2)
-	{
-		x = 0;
-		while (x < game->win_w / 2)
-			my_pixel_put(img, x++, y, GREY);
-		y++;
-	}
 	while (y < game->win_h)
 	{
 		x = 0;
 		while (x < game->win_w)
-			my_pixel_put(img, x++, y, GREEN);
+				my_pixel_put(img, x++, y, color);
 		y++;
 	}
 }
 
-void print_rays(t_player *player, t_img *img)
+void print_rays(t_game *game, t_player *player, double rayDir_x, double rayDir_y)
 {
-	int	px;
-	int	py;
-	px = player->player_x * PX;
-	py = player->player_y * PX;
-	double ray_x = player->dir_x - player->plane_x;
-	double ray_y = player->dir_y - player->plane_y;
-	double ray_x2 = player->dir_x + player->plane_x;
-	double ray_y2 = player->dir_y + player->plane_y;
-	int j = 0;
-	while (j < 100)
+	double j;
+	double world_x; 
+	double world_y;
+	double screen_x;
+	double screen_y;
+
+	j = 0;
+	while (j < game->win_w)
 	{
-		my_pixel_put(img, px + ray_x * j,
-			py + ray_y * j, RED);
-		j++;
+		world_x = player->player_x + rayDir_x * j;
+		world_y = player->player_y + rayDir_y * j;
+		screen_x = world_x * PX;
+		screen_y = world_y * PX;
+		if (game->map->grid[(int)(world_y)][(int)(world_x)] == '1')
+			break;
+		my_pixel_put(&game->buffer.img, screen_x, screen_y, RED);
+		j += 0.01;
 	}
-    int i = 0;
-	while (i < 100)
-	{
-		my_pixel_put(img, px + ray_x2 * i,
-			py + ray_y2 * i, RED);
-		i++;
-	}
-		// i = 0;
-	// while (i < 200)
-	// {
-	// 	my_pixel_put(img, px + player->dir_x * i,
-	// 		py + player->dir_y * i, RED);
-	// 	i++;
-	// }=p
 }
 
-int raycasting (t_game *game, t_player *player, t_img *img) 
+void print_fov(t_game *game, t_player *player)
 {
-	double cameraX;
-	double rayDirX;
-	double rayDirY;
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	double perpWallDist;
-	int stepX;
-	int stepY;
-	int map_x;
-	int map_y;
 	int x;
-	bool hit;
-	int side;
-	int lineHeight;
-	int DrawStart;
-	int DrawEnd;
+	double cameraX;
+	double rayDir_x;
+	double rayDir_y;
 	x = 0;
 	while (x < game->win_w)
 	{
 		cameraX = 2 * x / (double)game->win_w - 1;
-		rayDirX = player->dir_x + player->plane_x * cameraX;
-		rayDirY = player->dir_y + player->plane_y * cameraX;
-		map_x = (int) player->player_x;
-		map_y = (int) player->player_y;
-		hit = false;
-		if (rayDirX == 0)
-			deltaDistX = 1e30;
-		else 
-			deltaDistX = ft_abs(1.0 / rayDirX);
-		if (rayDirY == 0)
-			deltaDistY = 1e30;
-		else 
-			deltaDistY = ft_abs(1.0 / rayDirY);
-		if (rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (player->player_x  - map_x) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (map_x + 1.0 - player->player_x) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (player->player_y  - map_y) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (map_y + 1.0 - player->player_y) * deltaDistY;
-		}
-		while (!hit)
-		{
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				map_x += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				map_y += stepY;
-				side = 1;
-			}
-			if (game->map->grid[map_y][map_x] == '1')
-				hit = 1;
-		}
-		if (side == 0)
-			perpWallDist = sideDistX - deltaDistX;
-		else
-			perpWallDist = sideDistY - deltaDistY;
-		if (perpWallDist == 0)
-    		perpWallDist = 0.0001;
-		lineHeight = (int) (game->win_h / perpWallDist);
-		DrawStart = -lineHeight / 2 + game->win_h / 2;
-		if (DrawStart < 0)
-			DrawStart = 0;
-		DrawEnd = lineHeight / 2 + game->win_h / 2;
-		if (DrawEnd >= game->win_h)
-			DrawEnd = game->win_h - 1;
-		int y = DrawStart;
-		while (y < DrawEnd)
-		{
-		    my_pixel_put(img, x, y, RED);
-		    y++;
-		}
+		rayDir_x = player->dir_x + player->plane_x * cameraX;
+		rayDir_y = player->dir_y + player->plane_y * cameraX;
+		print_rays(game, player, rayDir_x, rayDir_y);
 		x++;
 	}
-	return (0);
 }
+
+// void ns()
+// {
+// 		if (rayDirX == 0)
+// 			deltaDistX = 1e30;
+// 		else 
+// 			deltaDistX = ft_abs(1.0 / rayDirX);
+// 		if (rayDirY == 0)
+// 			deltaDistY = 1e30;
+// 		else 
+// 			deltaDistY = ft_abs(1.0 / rayDirY);
+// 		if (rayDirX < 0)
+// 		{
+// 			stepX = -1;
+// 			sideDistX = (player->player_x  - map_x) * deltaDistX;
+// 		}
+// 		else
+// 		{
+// 			stepX = 1;
+// 			sideDistX = (map_x + 1.0 - player->player_x) * deltaDistX;
+// 		}
+// 		if (rayDirY < 0)
+// 		{
+// 			stepY = -1;
+// 			sideDistY = (player->player_y  - map_y) * deltaDistY;
+// 		}
+// 		else
+// 			stepY = 1;
+// 			sideDistY = (map_y + 1.0 - player->player_y) * deltaDistY;
+// }
+
+
 
 int	render(t_game *game)
 {
@@ -226,19 +188,19 @@ int	render(t_game *game)
 	debug = false;
 	if (debug)
 	{
-		paint_background(game, &game->buffer.img);
+		paint_plain_background(game, &game->buffer.img, GREY);
 		render_wall(game, &game->buffer.img);
-		move_player(&game->player);
+		move_player(game, &game->player);
 		draw_texture(&game->buffer.img, game->sprites.south.img, game->player.player_x * PX,
-		game->player.player_y * PX, 20);
-		print_rays(&game->player, &game->buffer.img);
+		game->player.player_y * PX, 3);
+		print_fov(game, &game->player);
 		mlx_put_image_to_window(game->mlx, game->win, game->buffer.img, 0, 0);
 	}
 	else
 	{
 		paint_background(game, &game->buffer.img);
-		move_player(&game->player);
-		raycasting(game, &game->player, &game->buffer.img);
+		move_player(game, &game->player);
+		raycasting(game);
 		mlx_put_image_to_window(game->mlx, game->win, game->buffer.img, 0, 0);
 	}
 	return (0);

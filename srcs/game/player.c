@@ -54,88 +54,44 @@ int	player_idle(int keycode, void *param)
 	return (0);
 }
 
-void	rotate(t_player *player, double rot)
+static void set_player_dir_values(t_player *player, double dx, double dy)
 {
-	double	old_dir_x;
-	double	old_dir_y;
-	double	old_plane_x;
-	double	old_plane_y;
-
-	old_dir_x = player->dir_x;
-	old_dir_y = player->dir_y;
-	old_plane_x = player->plane_x;
-	old_plane_y = player->plane_y;
-
-	player->dir_x = old_dir_x * cos(rot) - old_dir_y * sin(rot);
-	player->dir_y = old_dir_x * sin(rot) + old_dir_y * cos(rot);
-	player->plane_x = old_plane_x * cos(rot) - old_plane_y * sin(rot);
-	player->plane_y = old_plane_x * sin(rot) + old_plane_y * cos(rot);
+	player->dir_x = dx;
+	player->dir_y = dy;
 }
 
-void	move_player(t_player *player)
+static void set_player_plane_values(t_player *player, double px, double py)
 {
-	double	speed;
-	double	rot_speed;
-
-	speed = 0.1;
-	rot_speed = 0.03;
-	if (player->up)
-	{
-		player->player_x += player->dir_x * speed;
-		player->player_y += player->dir_y * speed;
-	}
-	if (player->down)
-	{
-		player->player_x -= player->dir_x * speed;
-		player->player_y -= player->dir_y * speed;
-	}
-	if (player->left)
-    {
-	    player->player_x -= player->plane_x * speed;
-	    player->player_y -= player->plane_y * speed;
-    }
-	if (player->right)
-    {
-	    player->player_x += player->plane_x * speed;
-	    player->player_y += player->plane_y * speed;
-    }
-	if (player->rotate_l)
-		rotate(player, -rot_speed);
-	if (player->rotate_r)
-		rotate(player, rot_speed);
+	player->plane_x = px;
+	player->plane_y = py;
 }
 
 void	initialize_player(t_game *game, t_player *player)
 {
+	double fov;
+
+	fov = 0.66;
 	player->player_x = game->map->start_x;
 	player->player_y = game->map->start_y;
 	if (player->starting_direction == NORTH)
 	{
-		player->dir_x = 0;
-		player->dir_y = -1;
-        player->plane_x = 0.66;
-        player->plane_y = 0;
+		set_player_dir_values(player, 0, -1);
+		set_player_plane_values(player, fov, 0);
 	}
-	if (player->starting_direction == SOUTH)
+	else if (player->starting_direction == SOUTH)
 	{
-		player->dir_x = 0;
-		player->dir_y = 1;
-        player->plane_x = -0.66;
-        player->plane_y = 0;
+		set_player_dir_values(player, 0, 1);
+		set_player_plane_values(player, -fov, 0);
 	}
-	if (player->starting_direction == EAST)
+	else if (player->starting_direction == EAST)
 	{
-		player->dir_x = 1;
-		player->dir_y = 0;
-        player->plane_x = 0;
-        player->plane_y = 0.66;
+		set_player_dir_values(player, 1, 0);
+		set_player_plane_values(player, 0, fov);
 	}
-	if (player->starting_direction == WEST)
+	else if (player->starting_direction == WEST)
 	{
-		player->dir_x = -1;
-		player->dir_y = 0;
-        player->plane_x = 0;
-        player->plane_y = -0.66;
+		set_player_dir_values(player, -1, 0);
+		set_player_plane_values(player, 0, -fov);
 	}
 }
 
