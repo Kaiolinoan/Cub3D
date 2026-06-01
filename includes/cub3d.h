@@ -21,14 +21,17 @@
 #include <stdbool.h>
 #include <time.h>
 #include <errno.h>
+#include "structs.h"
 
 #define PX 64
 #define RED 0xFFFF0000
-#define GREY 0x00666666
+#define RED_TRANSPARENT_LOOK 0x00880000
+#define RED_TRANSPARENT_LOOK2 0x00AA3333
+#define GREY 0x00666666 	
 #define GREEN 0X0000FF00
 #define BLUE 0X000000FF
-// #define WIDTH 
-// #define HEIGHT
+#define WIDTH 1920 
+#define HEIGHT 1024
 
 #define ALLOC_ERR "Memory allocation failed"
 #define RGB_DIGIT_ERR "RGB must only have digits"
@@ -38,149 +41,51 @@
 #define MLX_IMG "Image initialization failed"
 #define MLX_ADDR "Failed to get image adress"
 
-typedef struct s_img
-{
-	void *img;
-	char *addr;
-	int bits_per_pixel;
-	int line_length;
-	int endian;
-} t_img;
-
-typedef enum e_direction
-{
-	NORTH,
-	SOUTH,
-	WEST,
-	EAST,
-} t_direction;
-
-typedef struct s_rgb
-{
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
-} t_rgb;
-
-typedef struct s_map
-{
-	char **grid;
-	t_rgb *floor;
-	t_rgb *ceiling;
-	int start_x;
-	int start_y;
-} t_map;
-
-typedef struct s_texture
-{
-	void *path;
-	t_img img;
-}	t_texture;
-
-typedef struct s_sprites
-{
-	t_texture north;
-	t_texture south;
-	t_texture west;
-	t_texture east;
-} t_sprites;
-
-typedef struct s_player
-{
-	double player_x;
-	double player_y;
-	double dir_x;
-	double dir_y;
-	double plane_x;
-	double plane_y;
-
-	bool up;
-	bool down;
-	bool left;
-	bool right;
-
-	bool rotate_l;
-	bool rotate_r;
-	t_direction starting_direction;
-}	t_player;
-
-typedef struct s_game
-{
-	t_player	player;
-	t_sprites	sprites;
-	t_img 		buffer;
-	void		*mlx;
-	void		*win;
-	int			win_w;
-	int			win_h;
-	t_map		*map;
-} t_game;
-
-typedef struct s_elem
-{
-	char *id;
-	char **target;
-} t_elem;
-
-typedef struct t_raycasting
-{
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
-	int		stepX;
-	int		stepY;
-	int		map_x;
-	int		map_y;
-	int		DrawEnd;
-	int		DrawStart;
-	int		side;
-	int		lineHeight;
-	bool	hit;
-} t_ray;
 
 //--------------------------PARSING-----------------------
-bool check_extension(char *filename, char *extension);
-bool check_if_map_is_valid(char *filename, t_game *game);
-int get_map_details(t_game *game, char *filename);
-int filter_rgb(char **arr, t_game *game);
+bool		check_extension(char *filename, char *extension);
+bool		check_if_map_is_valid(char *filename, t_game *game);
+int			get_map_details(t_game *game, char *filename);
+int			filter_rgb(char **arr, t_game *game);
 
 // ver se realmente tem de ficar aqui no header ou se e so static
-bool check_maze(t_game *game);
-bool store_maze(t_game *game, char *full_line);
-bool flood_fill_prep(t_map *map);
-void get_starting_info(t_game *game);
-char *get_validated_full_line(char *full_line);
+bool		check_maze(t_game *game);
+bool		store_maze(t_game *game, char *full_line);
+bool		flood_fill_prep(t_map *map);
+void		get_starting_info(t_game *game);
+char		*get_validated_full_line(char *full_line);
 
 //--------------------------GAME-----------------------
-int render(t_game *game);
-void draw_texture(t_img *img, t_img sprite, float x, float y, int size);
-void render_player(t_game *game, t_img *img);
-int player_moving(int keycode, void *param);
-int player_idle(int keycode, void *param);
-void my_pixel_put(t_img *img, int x, int y, int color);
-void initialize_player(t_game *game, t_player *player);
-void move_player(t_game *game, t_player *player);
-int raycasting (t_game *game);
-
+int			render(t_game *game);
+int			player_moving(int keycode, void *param);
+int			raycasting (t_game *game);
+int			player_idle(int keycode, void *param);
+bool		initialize_images(t_game *game, t_sprites *sprites);
+void		render_player(t_game *game, t_img *img);
+void		draw_texture(t_game *game, t_img sprite, float x, float y, int size);
+void		my_pixel_put(t_game *game, int x, int y, int color);
+void		initialize_player(t_game *game, t_player *player);
+void		move_player(t_game *game, t_player *player);
+void		render_elements(t_game *game);
+void 		print_fov(t_game *game, t_player *player);
+void 		draw_textured_line(t_game *game, t_ray *ray, int x);
+void 		calculate_wall(t_game *game, t_ray *ray);
+void		mlx_main(t_game *game);
+t_game		*initialize_game(char *filename);
 
 //--------------------------UTILS-----------------------
-void clear_matriz(char **matriz);
-void print_error(char *msg);
-void clear_game(t_game *game);
-size_t array_len(char **array);
-int ft_strcmp(char *s1, char *s2);
-bool check_full_line(char *full_line);
-char *ft_strjoin_and_free(char *s1, char *s2);
-bool check_empty_line_on_map(char *full_line);
-bool check_extension(char *filename, char *extension);
-void remove_new_line_in_array(char **arr);
-void remove_new_line(char *str);
-int finish_game(void *param);
-double ft_abs(double num);
+int			ft_strcmp(char *s1, char *s2);
+int			finish_game(void *param);
+bool		check_empty_line_on_map(char *full_line);
+bool		check_full_line(char *full_line);
+double		ft_abs(double num);
+char		*ft_strjoin_and_free(char *s1, char *s2);
+void		clear_matriz(char **matriz);
+void		print_error(char *msg);
+void		clear_game(t_game *game);
+bool		check_extension(char *filename, char *extension);
+void		remove_new_line_in_array(char **arr);
+void		remove_new_line(char *str);
+size_t		array_len(char **array);
 
 #endif

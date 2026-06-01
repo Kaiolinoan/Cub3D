@@ -50,12 +50,20 @@ size_t	array_len(char **array)
 }
 
 void	clear_images(t_game *game)
-{
-	mlx_destroy_image(game->mlx, game->buffer.img);
-	mlx_destroy_image(game->mlx, game->sprites.east.img.img);
-	mlx_destroy_image(game->mlx, game->sprites.west.img.img);
-	mlx_destroy_image(game->mlx, game->sprites.north.img.img);
-	mlx_destroy_image(game->mlx, game->sprites.south.img.img);
+{	if (game->buffer.img)
+		mlx_destroy_image(game->mlx, game->buffer.img);
+	if (game->sprites.north.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.north.img.img);
+	if (game->sprites.east.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.east.img.img);
+	if (game->sprites.west.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.west.img.img);
+	if (game->sprites.south.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.south.img.img);
+	if (game->sprites.black_square.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.black_square.img.img);
+	if (game->sprites.white_square.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.white_square.img.img);
 }
 
 void	clear_game(t_game *game)
@@ -67,6 +75,8 @@ void	clear_game(t_game *game)
 	free(game->sprites.west.path);
 	free(game->sprites.north.path);
 	free(game->sprites.south.path);
+	free(game->sprites.black_square.path);
+	free(game->sprites.white_square.path);
 	if (game->map)
 	{
 		free(game->map->floor);

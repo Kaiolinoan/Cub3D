@@ -21,29 +21,6 @@ void cast_ray(t_game *game, t_ray *ray)
 	}
 }
 
-void calculate_and_draw_line(t_game *game, t_ray *ray, int x)
-{
-	if (ray->side == 0)
-		ray->perpWallDist = ray->sideDistX - ray->deltaDistX;
-	else
-		ray->perpWallDist = ray->sideDistY - ray->deltaDistY;
-	if (ray->perpWallDist == 0)
-    	ray->perpWallDist = 0.0001;
-	ray->lineHeight = (int) (game->win_h / ray->perpWallDist);
-	ray->DrawStart = -ray->lineHeight / 2 + game->win_h / 2;
-	if (ray->DrawStart < 0)
-		ray->DrawStart = 0;
-	ray->DrawEnd = ray->lineHeight / 2 + game->win_h / 2;
-	if (ray->DrawEnd >= game->win_h)
-		ray->DrawEnd = game->win_h - 1;
-	int y = ray->DrawStart;
-	while (y < ray->DrawEnd)
-	{
-	    my_pixel_put(&game->buffer.img, x, y, GREY);
-	    y++;
-	}
-}
-
 void check_raydir_x(t_player *player, t_ray *ray)
 {
     if (ray->rayDirX == 0)
@@ -101,7 +78,8 @@ int raycasting (t_game *game)
 	{
 		init_ray(game, &game->player, &ray, x);
         cast_ray(game, &ray);
-		calculate_and_draw_line(game, &ray, x);
+		calculate_wall(game, &ray);
+		draw_textured_line(game, &ray, x);
         x++;
     }
 	return (0);
