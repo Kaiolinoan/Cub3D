@@ -6,7 +6,7 @@
 /*   By: klino-an <klino-an@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 02:51:13 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/02 17:48:42 by klino-an         ###   ########.fr       */
+/*   Updated: 2026/06/01 05:52:27 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	remove_new_line(char *str)
 	}
 }
 
-double ft_abs(double num)
+double	ft_abs(double num)
 {
 	if (num < 0)
 		num = num * -1;

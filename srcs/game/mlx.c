@@ -34,11 +34,8 @@ void	mlx_main(t_game *game)
 		game->win_h = array_len(game->map->grid) * 64;
 	}
 	else
-	{
-		game->win_w = WIDTH;
-		game->win_h = HEIGHT;
-	}
-	game->win = mlx_new_window(game->mlx, game->win_w, game->win_h, "Cub3D");
+		mlx_get_screen_size(game->mlx, &game->win_w, &game->win_h);
+	game->win = mlx_new_window(game->mlx, game->win_w / 1.1, game->win_h / 1.1, "Cub3D");
 	if (!game->win)
 		return (print_error(MLX_WIN), clear_game(game));
 	if (!initialize_images(game, &game->sprites))
