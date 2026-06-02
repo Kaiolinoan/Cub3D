@@ -66,5 +66,11 @@ t_game	*initialize_game(char *filename)
 		return (clear_game(game), print_error(ALLOC_ERR), NULL);
 	if (!get_map_details(game, filename))
 		return (clear_game(game), NULL);
+	game->minimap = true;
+	game->minimap_tile_size = 20;
+	game->minimap_radius_tiles = 7.0;
+	game->movement_speed = 0.07;
+	game->rotation_speed = 0.03;
+	game->fov = 0.66;
 	return (game);
 }

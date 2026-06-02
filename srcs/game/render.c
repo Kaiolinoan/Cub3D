@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 02:33:09 by kelle             #+#    #+#             */
-/*   Updated: 2026/05/23 02:35:55 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/02 18:51:48 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ static void	paint_background(t_game *game)
 	int f;
 
 	y = 0;
-	c = create_trgb(0, game->map->ceiling->r, game->map->ceiling->g, game->map->ceiling->b);
-	f = create_trgb(0, game->map->floor->r, game->map->floor->g, game->map->floor->b);
+	c = create_trgb(0, game->map->ceiling->r, game->map->ceiling->g,
+		game->map->ceiling->b);
+	f = create_trgb(0, game->map->floor->r, game->map->floor->g,
+		game->map->floor->b);
 	while (y < game->win_h)
 	{
 		x = 0;
@@ -80,14 +82,20 @@ int	render(t_game *game)
 		draw_texture(game, game->sprites.black_square.img, game->player.player_x * PX,
 		game->player.player_y * PX, 3);
 		print_fov(game, &game->player);
+		if (game->minimap)
+			render_minimap(game);
 		mlx_put_image_to_window(game->mlx, game->win, game->buffer.img, 0, 0);
+		display_speeds(game);
 	}
 	else
 	{
 		paint_background(game);
 		move_player(game, &game->player);
 		raycasting(game);
+		if (game->minimap)
+			render_minimap(game);
 		mlx_put_image_to_window(game->mlx, game->win, game->buffer.img, 0, 0);
+		display_speeds(game);
 	}
 	return (0);
 }

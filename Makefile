@@ -18,9 +18,9 @@ UTILSDIR	= utils/
 # ================================= FILES =================================== #
 
 SRC_FILES	= main.c 
-UTILS_FILES	= utils.c parse_utils.c
+UTILS_FILES	= utils.c parse_utils.c text_render.c
 PARSE_FILES = parse_elements.c parse_map.c parse_rgb.c flood_fill.c get_infos.c
-GAME_FILES 	= render.c player.c movement.c raycasting.c initialization.c mlx.c debug.c raycasting2.c
+GAME_FILES 	= render.c player.c movement.c raycasting.c minimap.c initialization.c mlx.c debug.c raycasting2.c
 
 SRC = $(addprefix $(SRCDIR), $(SRC_FILES)) \
 	  $(addprefix $(SRCDIR)$(PARSEDIR), $(PARSE_FILES)) \

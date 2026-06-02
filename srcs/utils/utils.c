@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 02:51:13 by kelle             #+#    #+#             */
-/*   Updated: 2026/05/23 02:52:18 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/01 05:52:27 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	remove_new_line(char *str)
 	}
 }
 
-double ft_abs(double num)
+double	ft_abs(double num)
 {
 	if (num < 0)
 		num = num * -1;
