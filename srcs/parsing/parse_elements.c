@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: klino-an <klino-an@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 02:44:01 by kelle             #+#    #+#             */
-/*   Updated: 2026/05/23 02:45:59 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/02 17:40:13 by klino-an         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	check_and_assign_coordinate(t_game *g, char *line)
 	arr = ft_split(line, ' ');
 	if (!arr || !*arr || !arr[1])
 		return (clear_matriz(arr), print_error("Invalid element"), -1);
-	remove_new_line(arr);
+	remove_new_line(*arr);
 	tmp = filter_element(arr, g);
 	clear_matriz(arr);
 	if (tmp < 0)
