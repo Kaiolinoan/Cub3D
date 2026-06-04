@@ -22,16 +22,30 @@ bool	initialize_images(t_game *game, t_sprites *sprites)
 	game->buffer.img = mlx_new_image(game->mlx, game->win_w, game->win_h);
     set_image_path(&sprites->black_square, "assets/black_square-64.xpm");
     set_image_path(&sprites->white_square, "assets/square-64.xpm");
-    set_image_path(&sprites->test, "assets/gemini.xpm");
-    set_image_path(&sprites->test2, "assets/grey_pink.xpm");
+    set_image_path(&sprites->test1, "assets/test1.xpm");
+    set_image_path(&sprites->test2, "assets/grey_yellow.xpm");
+    set_image_path(&sprites->test3, "assets/grey_pink.xpm");
+    set_image_path(&sprites->test4, "assets/gemini.xpm");
+    set_image_path(&sprites->test5, "assets/test.xpm");
+    set_image_path(&sprites->test6, "assets/test2.xpm");
+    set_image_path(&sprites->test7, "assets/bright.xpm");
 	file_to_image(game->mlx, &sprites->east);
 	file_to_image(game->mlx, &sprites->west);
 	file_to_image(game->mlx, &sprites->north);
 	file_to_image(game->mlx, &sprites->south);
 	file_to_image(game->mlx, &sprites->white_square);
 	file_to_image(game->mlx, &sprites->black_square);
-	file_to_image(game->mlx, &sprites->test);
+	// file_to_image(game->mlx, &sprites->test);
+	file_to_image(game->mlx, &sprites->test1);
 	file_to_image(game->mlx, &sprites->test2);
+	file_to_image(game->mlx, &sprites->test3);
+	file_to_image(game->mlx, &sprites->test4);
+	file_to_image(game->mlx, &sprites->test5);
+	file_to_image(game->mlx, &sprites->test6);
+	file_to_image(game->mlx, &sprites->test7);
+	// file_to_image(game->mlx, &sprites->test8);
+	// file_to_image(game->mlx, &sprites->test9);
+	// file_to_image(game->mlx, &sprites->test10);
 	if (!game->buffer.img || !sprites->east.img.img || !sprites->west.img.img
         || !sprites->north.img.img || !sprites->south.img.img
         || !sprites->white_square.img.img || !sprites->black_square.img.img)
@@ -45,8 +59,17 @@ bool	initialize_images(t_game *game, t_sprites *sprites)
 	get_dir_img_address(&sprites->south);
 	get_dir_img_address(&sprites->white_square);
 	get_dir_img_address(&sprites->black_square);
-	get_dir_img_address(&sprites->test);
+	// get_dir_img_address(&sprites->test);
+	get_dir_img_address(&sprites->test1);
 	get_dir_img_address(&sprites->test2);
+	get_dir_img_address(&sprites->test3);
+	get_dir_img_address(&sprites->test4);
+	get_dir_img_address(&sprites->test5);
+	get_dir_img_address(&sprites->test6);
+	get_dir_img_address(&sprites->test7);
+	// get_dir_img_address(&sprites->test8);
+	// get_dir_img_address(&sprites->test9);
+	// get_dir_img_address(&sprites->test10);
 	if (!game->buffer.addr || !sprites->east.img.addr || !sprites->west.img.addr 
         || !sprites->north.img.addr || !sprites->south.img.addr 
         || !sprites->white_square.img.addr || !sprites->black_square.img.addr)

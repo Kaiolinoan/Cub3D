@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 01:10:41 by kelle             #+#    #+#             */
 /*   Updated: 2026/06/02 19:08:34 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/02 19:08:34 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +83,8 @@ void		mlx_main(t_game *game);
 t_game		*initialize_game(char *filename);
 void	    render_minimap(t_game *game);
 void	    display_minimap(t_game *game);
+void    	rotate(t_player *player, double rot);
+
 
 //--------------------------UTILS-----------------------
 void	clear_matriz(char **matriz);

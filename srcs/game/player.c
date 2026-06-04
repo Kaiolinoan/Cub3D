@@ -7,12 +7,13 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 02:26:21 by kelle             #+#    #+#             */
 /*   Updated: 2026/06/01 05:52:53 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/01 05:52:53 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	handle_movement_keys(int keycode, t_player *player)
+static void	handle_keys(int keycode, t_player *player)
 {
 	if (keycode == XK_w)
 		player->up = true;
@@ -26,6 +27,13 @@ static void	handle_movement_keys(int keycode, t_player *player)
 		player->rotate_l = true;
 	else if (keycode == XK_Right)
 		player->rotate_r = true;
+	if (keycode == XK_space)
+	{
+		if (player->mouse_flag == false)
+			player->mouse_flag = true;
+		else
+			player->mouse_flag = false;
+	}
 }
 
 static void	handle_minimap_keys(int keycode, t_game *game)
@@ -73,7 +81,7 @@ int	player_moving(int keycode, void *param)
 	game = param;
 	if (keycode == XK_Escape)
 		finish_game(game);
-	handle_movement_keys(keycode, &game->player);
+	handle_keys(keycode, &game->player);
 	handle_minimap_keys(keycode, game);
 	handle_speed_keys(keycode, game);
 	return (0);
@@ -115,6 +123,7 @@ void	initialize_player(t_game *game, t_player *player)
 {
 	player->player_x = game->map->start_x;
 	player->player_y = game->map->start_y;
+	player->mouse_flag = false;
 	if (player->starting_direction == NORTH)
 	{
 		set_player_dir_values(player, 0, -1);

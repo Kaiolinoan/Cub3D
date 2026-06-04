@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: klino-an <klino-an@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 01:10:31 by kelle             #+#    #+#             */
 /*   Updated: 2026/06/02 00:44:21 by kelle            ###   ########.fr       */

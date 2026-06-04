@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: klino-an <klino-an@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 02:51:13 by kelle             #+#    #+#             */
 /*   Updated: 2026/06/01 05:52:27 by kelle            ###   ########.fr       */
@@ -64,7 +64,11 @@ void	clear_images(t_game *game)
 		mlx_destroy_image(game->mlx, game->sprites.black_square.img.img);
 	if (game->sprites.white_square.img.img)
 		mlx_destroy_image(game->mlx, game->sprites.white_square.img.img);
-}
+	if (game->sprites.test.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.test.img.img);
+	if (game->sprites.test2.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.test2.img.img);
+	}
 
 void	clear_game(t_game *game)
 {
@@ -77,6 +81,8 @@ void	clear_game(t_game *game)
 	free(game->sprites.south.path);
 	free(game->sprites.black_square.path);
 	free(game->sprites.white_square.path);
+	free(game->sprites.test.path);
+	free(game->sprites.test2.path);
 	if (game->map)
 	{
 		free(game->map->floor);

@@ -54,15 +54,24 @@ typedef struct s_texture
 
 typedef struct s_sprites
 {
-	t_texture	north;
-	t_texture	south;
-	t_texture	west;
-	t_texture	east;
-	t_texture	white_square;
-	t_texture	black_square;
-	t_texture	test;
-	t_texture	test2;
-}	t_sprites;
+	t_texture north;
+	t_texture south;
+	t_texture west;
+	t_texture east;
+	t_texture white_square;
+	t_texture black_square;
+	t_texture test;
+	t_texture test1;
+	t_texture test2;
+	t_texture test3;
+	t_texture test4;
+	t_texture test5;
+	t_texture test6;
+	t_texture test7;
+	t_texture test8;
+	t_texture test9;
+	t_texture test10;
+} t_sprites;
 
 typedef struct s_player
 {
@@ -78,6 +87,7 @@ typedef struct s_player
 	bool		right;
 	bool		rotate_l;
 	bool		rotate_r;
+	bool		mouse_flag;
 	t_direction	starting_direction;
 }	t_player;
 
