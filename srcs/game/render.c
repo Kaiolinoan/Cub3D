@@ -82,8 +82,8 @@ int	render(t_game *game)
 		draw_texture(game, game->sprites.black_square.img, game->player.player_x * PX,
 		game->player.player_y * PX, 3);
 		print_fov(game, &game->player);
-		if (game->minimap)
-			render_minimap(game);
+		// if (game->minimap)
+		// 	render_minimap(game);
 		mlx_put_image_to_window(game->mlx, game->win, game->buffer.img, 0, 0);
 		display_speeds(game);
 	}
@@ -92,8 +92,8 @@ int	render(t_game *game)
 		paint_background(game);
 		move_player(game, &game->player);
 		raycasting(game);
-		if (game->minimap)
-			render_minimap(game);
+		// if (game->minimap)
+		// 	render_minimap(game);
 		mlx_put_image_to_window(game->mlx, game->win, game->buffer.img, 0, 0);
 		display_speeds(game);
 	}

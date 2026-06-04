@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-static void	handle_movement_keys(int keycode, t_player *player)
+static void	handle_keys(int keycode, t_player *player)
 {
 	if (keycode == XK_w)
 		player->up = true;
@@ -26,27 +26,34 @@ static void	handle_movement_keys(int keycode, t_player *player)
 		player->rotate_l = true;
 	else if (keycode == XK_Right)
 		player->rotate_r = true;
+	if (keycode == XK_space)
+	{
+		if (player->mouse_flag == false)
+			player->mouse_flag = true;
+		else
+			player->mouse_flag = false;
+	}
 }
 
-static void	handle_minimap_keys(int keycode, t_game *game)
-{
-	if (keycode == XK_m)
-		display_minimap(game);
-	else if (keycode == XK_plus || keycode == XK_equal)
-		game->minimap_radius_tiles += 0.5;
-	else if (keycode == XK_minus)
-	{
-		if (game->minimap_radius_tiles > 1.0)
-			game->minimap_radius_tiles -= 0.5;
-	}
-	else if (keycode == XK_bracketright)
-		game->minimap_tile_size += 2;
-	else if (keycode == XK_bracketleft)
-	{
-		if (game->minimap_tile_size > 4)
-			game->minimap_tile_size -= 2;
-	}
-}
+// static void	handle_minimap_keys(int keycode, t_game *game)
+// {
+// 	if (keycode == XK_m)
+// 		display_minimap(game);
+// 	else if (keycode == XK_plus || keycode == XK_equal)
+// 		game->minimap_radius_tiles += 0.5;
+// 	else if (keycode == XK_minus)
+// 	{
+// 		if (game->minimap_radius_tiles > 1.0)
+// 			game->minimap_radius_tiles -= 0.5;
+// 	}
+// 	else if (keycode == XK_bracketright)
+// 		game->minimap_tile_size += 2;
+// 	else if (keycode == XK_bracketleft)
+// 	{
+// 		if (game->minimap_tile_size > 4)
+// 			game->minimap_tile_size -= 2;
+// 	}
+// }
 
 static void	handle_speed_keys(int keycode, t_game *game)
 {
@@ -73,8 +80,8 @@ int	player_moving(int keycode, void *param)
 	game = param;
 	if (keycode == XK_Escape)
 		finish_game(game);
-	handle_movement_keys(keycode, &game->player);
-	handle_minimap_keys(keycode, game);
+	handle_keys(keycode, &game->player);
+	// handle_minimap_keys(keycode, game);
 	handle_speed_keys(keycode, game);
 	return (0);
 }
@@ -115,6 +122,7 @@ void	initialize_player(t_game *game, t_player *player)
 {
 	player->player_x = game->map->start_x;
 	player->player_y = game->map->start_y;
+	player->mouse_flag = false;
 	if (player->starting_direction == NORTH)
 	{
 		set_player_dir_values(player, 0, -1);

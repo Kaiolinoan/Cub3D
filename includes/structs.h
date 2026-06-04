@@ -87,6 +87,7 @@ typedef struct s_player
 	bool		right;
 	bool		rotate_l;
 	bool		rotate_r;
+	bool		mouse_flag;
 	t_direction	starting_direction;
 }	t_player;
 

@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-static void	rotate(t_player *player, double rot)
+void	rotate(t_player *player, double rot)
 {
 	double	old_dir_x;
 	double	old_dir_y;
@@ -58,7 +58,7 @@ static void	update_player_y(t_game *game, double dir, double speed, bool sum)
 	double	padding;
 	double	collision_y;
 
-	padding = 0.2;
+	padding = 0.35;
 	if (sum)
 	{
 		new_y = game->player.player_y + dir * speed;

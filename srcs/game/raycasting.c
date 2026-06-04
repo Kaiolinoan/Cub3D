@@ -16,6 +16,12 @@ void	cast_ray(t_game *game, t_ray *ray)
 			ray->map_y += ray->stepY;
 			ray->side = 1;
 		}
+		int x = ray->map_x;
+		int y = ray->map_y;
+
+		if (y < 0 || y >= game->win_h ||
+		    x < 0 || x >=  (int)strlen(game->map->grid[ray->map_y]))
+		    return; 
 		if (game->map->grid[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
