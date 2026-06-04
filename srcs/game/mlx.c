@@ -31,23 +31,25 @@ int	finish_game(void *param)
 // 	return (0);
 // }
 
-int mouse_move(int x, int y, void *param)
+static int	mouse_move(int x, int y, void *param)
 {
-    t_game *game = param;
-    static int last_x = -1;
-    int dx;
+	t_game		*game;
+	static int	last_x = -1;
+	int			dx;
+
 	(void)y;
+	game = param;
 	if (game->player.mouse_flag == false)
 		return (0);
-    if (last_x == -1)
-    {
-        last_x = x;
-        return (0);
-    }
+	if (last_x == -1)
+	{
+		last_x = x;
+		return (0);
+	}
 	dx = x - last_x;
-    last_x = x;
-    rotate(&game->player, dx * game->rotation_speed * 0.1);
-    return (0);
+	last_x = x;
+	rotate(&game->player, dx * game->rotation_speed * 0.1);
+	return (0);
 }
 
 void	mlx_main(t_game *game)
@@ -62,7 +64,7 @@ void	mlx_main(t_game *game)
 	}
 	else
 		mlx_get_screen_size(game->mlx, &game->win_w, &game->win_h);
-	game->win = mlx_new_window(game->mlx, game->win_w , game->win_h , "Cub3D");
+	game->win = mlx_new_window(game->mlx, game->win_w, game->win_h, "Cub3D");
 	if (!game->win)
 		return (print_error(MLX_WIN), clear_game(game));
 	if (!initialize_images(game, &game->sprites))

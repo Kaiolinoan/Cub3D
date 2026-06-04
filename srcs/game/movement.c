@@ -23,7 +23,6 @@ void	rotate(t_player *player, double rot)
 	old_dir_y = player->dir_y;
 	old_plane_x = player->plane_x;
 	old_plane_y = player->plane_y;
-
 	player->dir_x = old_dir_x * cos(rot) - old_dir_y * sin(rot);
 	player->dir_y = old_dir_x * sin(rot) + old_dir_y * cos(rot);
 	player->plane_x = old_plane_x * cos(rot) - old_plane_y * sin(rot);

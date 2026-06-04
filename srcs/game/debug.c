@@ -37,22 +37,25 @@ void	render_elements(t_game *game)
 		while (map[y][x])
 		{
 			if (map[y][x] == '1')
-				draw_texture(game, game->sprites.white_square.img, x * PX, y * PX, PX);
+				draw_texture(game, game->sprites.white_square.img,
+					x * PX, y * PX, PX);
 			else if (map[y][x] == ' ')
-				draw_texture(game, game->sprites.black_square.img, x * PX, y * PX, PX);
+				draw_texture(game, game->sprites.black_square.img,
+					x * PX, y * PX, PX);
 			x++;
 		}
 		y++;
 	}
 }
 
-static void    print_rays(t_game *game, t_player *player, double rayDir_x, double rayDir_y)
+static void	print_rays(t_game *game, t_player *player,
+	double rayDir_x, double rayDir_y)
 {
-	double j;
-	double world_x; 
-	double world_y;
-	double screen_x;
-	double screen_y;
+	double	j;
+	double	world_x;
+	double	world_y;
+	double	screen_x;
+	double	screen_y;
 
 	j = 0;
 	while (j < game->win_w)
@@ -64,27 +67,28 @@ static void    print_rays(t_game *game, t_player *player, double rayDir_x, doubl
 		if (world_x < 0 || world_y < 0
 			|| world_y >= array_len(game->map->grid)
 			|| world_x >= ft_strlen(game->map->grid[(int)world_y]))
-    		break;
+			break ;
 		if (game->map->grid[(int)(world_y)][(int)(world_x)] == '1')
-			break;
+			break ;
 		my_pixel_put(game, screen_x, screen_y, RED);
 		j += 0.05;
 	}
 }
 
-void print_fov(t_game *game, t_player *player)
+void	print_fov(t_game *game, t_player *player)
 {
-	int x;
-	double cameraX;
-	double rayDir_x;
-	double rayDir_y;
+	int		x;
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+
 	x = 0;
 	while (x < game->win_w)
 	{
-		cameraX = 2 * x / (double)game->win_w - 1;
-		rayDir_x = player->dir_x + player->plane_x * cameraX;
-		rayDir_y = player->dir_y + player->plane_y * cameraX;
-		print_rays(game, player, rayDir_x, rayDir_y);
+		camera_x = 2 * x / (double)game->win_w - 1;
+		ray_dir_x = player->dir_x + player->plane_x * camera_x;
+		ray_dir_y = player->dir_y + player->plane_y * camera_x;
+		print_rays(game, player, ray_dir_x, ray_dir_y);
 		x++;
 	}
 }

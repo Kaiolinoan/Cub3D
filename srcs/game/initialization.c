@@ -1,8 +1,10 @@
 #include "cub3d.h"
-static void set_image_path(t_texture *tex, char *path)
+
+static void	set_image_path(t_texture *tex, char *path)
 {
-    tex->path = ft_strdup(path);
-}   
+	tex->path = ft_strdup(path);
+}
+
 static void	file_to_image(void *mlx, t_texture *dir)
 {
 	int	size;
@@ -20,15 +22,15 @@ static void	get_dir_img_address(t_texture *dir)
 bool	initialize_images(t_game *game, t_sprites *sprites)
 {
 	game->buffer.img = mlx_new_image(game->mlx, game->win_w, game->win_h);
-    set_image_path(&sprites->black_square, "assets/black_square-64.xpm");
-    set_image_path(&sprites->white_square, "assets/square-64.xpm");
-    set_image_path(&sprites->test1, "assets/test1.xpm");
-    set_image_path(&sprites->test2, "assets/grey_yellow.xpm");
-    set_image_path(&sprites->test3, "assets/grey_pink.xpm");
-    set_image_path(&sprites->test4, "assets/gemini.xpm");
-    set_image_path(&sprites->test5, "assets/test.xpm");
-    set_image_path(&sprites->test6, "assets/test2.xpm");
-    set_image_path(&sprites->test7, "assets/bright.xpm");
+	set_image_path(&sprites->black_square, "assets/black_square-64.xpm");
+	set_image_path(&sprites->white_square, "assets/square-64.xpm");
+	set_image_path(&sprites->test1, "assets/test1.xpm");
+	set_image_path(&sprites->test2, "assets/grey_yellow.xpm");
+	set_image_path(&sprites->test3, "assets/grey_pink.xpm");
+	set_image_path(&sprites->test4, "assets/gemini.xpm");
+	set_image_path(&sprites->test5, "assets/test.xpm");
+	set_image_path(&sprites->test6, "assets/test2.xpm");
+	set_image_path(&sprites->test7, "assets/bright.xpm");
 	file_to_image(game->mlx, &sprites->east);
 	file_to_image(game->mlx, &sprites->west);
 	file_to_image(game->mlx, &sprites->north);
@@ -47,8 +49,8 @@ bool	initialize_images(t_game *game, t_sprites *sprites)
 	// file_to_image(game->mlx, &sprites->test9);
 	// file_to_image(game->mlx, &sprites->test10);
 	if (!game->buffer.img || !sprites->east.img.img || !sprites->west.img.img
-        || !sprites->north.img.img || !sprites->south.img.img
-        || !sprites->white_square.img.img || !sprites->black_square.img.img)
+		|| !sprites->north.img.img || !sprites->south.img.img
+		|| !sprites->white_square.img.img || !sprites->black_square.img.img)
 		return (print_error(MLX_IMG), 0);
 	game->buffer.addr = mlx_get_data_addr(game->buffer.img,
 			&game->buffer.bits_per_pixel, &game->buffer.line_length,
@@ -70,10 +72,10 @@ bool	initialize_images(t_game *game, t_sprites *sprites)
 	// get_dir_img_address(&sprites->test8);
 	// get_dir_img_address(&sprites->test9);
 	// get_dir_img_address(&sprites->test10);
-	if (!game->buffer.addr || !sprites->east.img.addr || !sprites->west.img.addr 
-        || !sprites->north.img.addr || !sprites->south.img.addr 
-        || !sprites->white_square.img.addr || !sprites->black_square.img.addr)
-			return (print_error(MLX_ADDR), 0);
+	if (!game->buffer.addr || !sprites->east.img.addr || !sprites->west.img.addr
+		|| !sprites->north.img.addr || !sprites->south.img.addr
+		|| !sprites->white_square.img.addr || !sprites->black_square.img.addr)
+		return (print_error(MLX_ADDR), 0);
 	return (1);
 }
 

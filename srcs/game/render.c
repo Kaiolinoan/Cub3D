@@ -17,14 +17,16 @@ void	my_pixel_put(t_game *game, int x, int y, int color)
 	char	*dst;
 	int		offset;
 
-	if (x < 0 || y < 0 )
-		return;
+	if (x < 0 || y < 0)
+		return ;
 	if (x >= game->win_w || y >= game->win_h)
 		return ;
-	offset = (y * game->buffer.line_length + x * (game->buffer.bits_per_pixel / 8));
+	offset = (y * game->buffer.line_length + x
+			* (game->buffer.bits_per_pixel / 8));
 	dst = game->buffer.addr + offset;
 	*(unsigned int *)dst = color;
 }
+
 static int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
@@ -40,23 +42,23 @@ static void	paint_plain_background(t_game *game, int color)
 	{
 		x = 0;
 		while (x < game->win_w)
-				my_pixel_put(game, x++, y, color);
+			my_pixel_put(game, x++, y, color);
 		y++;
 	}
 }
 
 static void	paint_background(t_game *game)
 {
-	int	y;
-	int	x;
-	int c;
-	int f;
+	int		y;
+	int		x;
+	int		c;
+	int		f;
 
 	y = 0;
 	c = create_trgb(0, game->map->ceiling->r, game->map->ceiling->g,
-		game->map->ceiling->b);
+			game->map->ceiling->b);
 	f = create_trgb(0, game->map->floor->r, game->map->floor->g,
-		game->map->floor->b);
+			game->map->floor->b);
 	while (y < game->win_h)
 	{
 		x = 0;
@@ -79,8 +81,9 @@ int	render(t_game *game)
 		paint_plain_background(game, GREY);
 		render_elements(game);
 		move_player(game, &game->player);
-		draw_texture(game, game->sprites.black_square.img, game->player.player_x * PX,
-		game->player.player_y * PX, 3);
+		draw_texture(game, game->sprites.black_square.img,
+			game->player.player_x * PX,
+			game->player.player_y * PX, 3);
 		print_fov(game, &game->player);
 		if (game->minimap)
 			render_minimap(game);

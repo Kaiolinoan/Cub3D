@@ -52,54 +52,92 @@
 # define MINIMAP_FOV_COLOR 0x0000E5FF
 
 //--------------------------PARSING-----------------------
-bool	check_extension(char *filename, char *extension);
-bool	check_if_map_is_valid(char *filename, t_game *game);
-int		get_map_details(t_game *game, char *filename);
-int		filter_rgb(char **arr, t_game *game);
 
-// ver se realmente tem de ficar aqui no header ou se e so static
-bool	check_maze(t_game *game);
-bool	store_maze(t_game *game, char *full_line);
-bool	flood_fill_prep(t_map *map);
-void	get_starting_info(t_game *game);
-char	*get_validated_full_line(char *full_line);
+//rgb
+int			filter_rgb(char **arr, t_game *game);
+
+//elements
+int			get_map_details(t_game *game, char *filename);
+
+//map
+bool		check_if_map_is_valid(char *filename, t_game *game);
+bool		store_maze(t_game *game, char *full_line);
+
+//info
+void		get_starting_info(t_game *game);
+char		*get_validated_full_line(char *full_line);
+
+//flood fill
+bool		flood_fill_prep(t_map *map);
 
 //--------------------------GAME-----------------------
-int			render(t_game *game);
-int			player_moving(int keycode, void *param);
-int			raycasting (t_game *game);
-int			player_idle(int keycode, void *param);
-bool		initialize_images(t_game *game, t_sprites *sprites);
-void		render_player(t_game *game, t_img *img);
-void		draw_texture(t_game *game, t_img sprite, float x, float y, int size);
-void		my_pixel_put(t_game *game, int x, int y, int color);
-void		initialize_player(t_game *game, t_player *player);
-void		move_player(t_game *game, t_player *player);
-void		render_elements(t_game *game);
-void 		print_fov(t_game *game, t_player *player);
-void 		draw_textured_line(t_game *game, t_ray *ray, int x);
-void 		calculate_wall(t_game *game, t_ray *ray);
-void		mlx_main(t_game *game);
-t_game		*initialize_game(char *filename);
-void	    render_minimap(t_game *game);
-void	    display_minimap(t_game *game);
-void    	rotate(t_player *player, double rot);
 
+//debug
+void		render_player(t_game *game, t_img *img);
+void		render_elements(t_game *game);
+void		print_fov(t_game *game, t_player *player);
+void		draw_texture(t_game *game, t_img sprite, float x, float y, int size);
+
+//initialization
+bool		initialize_images(t_game *game, t_sprites *sprites);
+t_game		*initialize_game(char *filename);
+
+//minimap
+void		render_minimap(t_game *game);
+void		display_minimap(t_game *game);
+
+//mlx
+void		mlx_main(t_game *game);
+int			finish_game(void *param);
+
+//movement
+void		rotate(t_player *player, double rot);
+void		move_player(t_game *game, t_player *player);
+
+//player
+int			player_moving(int keycode, void *param);
+int			player_idle(int keycode, void *param);
+void		initialize_player(t_game *game, t_player *player);
+
+//render
+int			render(t_game *game);
+void		my_pixel_put(t_game *game, int x, int y, int color);
+
+//raycasting 
+int			raycasting(t_game *game);
+void		calculate_wall(t_game *game, t_ray *ray);
+void		draw_textured_line(t_game *game, t_ray *ray, int x);
+
+//color gradient
+int			color_gradient(t_ray *ray, int color);
+
+// keys handle
+void		handle_speed_keys(int keycode, t_game *game);
+void		handle_minimap_keys(int keycode, t_game *game);
+void		handle_keys(int keycode, t_player *player);
 
 //--------------------------UTILS-----------------------
-void	clear_matriz(char **matriz);
-void	print_error(char *msg);
-void	clear_game(t_game *game);
-size_t	array_len(char **array);
-int		ft_strcmp(char *s1, char *s2);
-bool	check_full_line(char *full_line);
-char	*ft_strjoin_and_free(char *s1, char *s2);
-bool	check_empty_line_on_map(char *full_line);
-bool	check_extension(char *filename, char *extension);
-void	remove_new_line_in_array(char **arr);
-void	remove_new_line(char *str);
-int		finish_game(void *param);
-double	ft_abs(double num);
-void	draw_string_scaled(t_game *game, char *str, int x, int y, int scale);
-void	display_speeds(t_game *game);
+
+//utils
+void		print_error(char *msg);
+size_t		array_len(char **array);
+void		remove_new_line_in_array(char **arr);
+void		remove_new_line(char *str);
+double		ft_abs(double num);
+
+//parsing
+bool		check_full_line(char *full_line);
+bool		check_empty_line_on_map(char *full_line);
+char		*ft_strjoin_and_free(char *s1, char *s2);
+int			ft_strcmp(char *s1, char *s2);
+bool		check_extension(char *filename, char *extension);
+
+//text_render
+void		draw_string_scaled(t_game *game, char *str, int x, int y, int scale);
+void		display_speeds(t_game *game);
+
+//clean
+void		clear_matriz(char **matriz);
+void		clear_game(t_game *game);
+
 #endif

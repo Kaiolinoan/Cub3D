@@ -109,15 +109,15 @@ static double	raycast_to_wall(t_game *game, double start_x, double start_y, doub
 
 static void	draw_minimap_fov_line(t_game *game, int start_x, int start_y, double end_x, double end_y)
 {
-	double	line_step_x;
-	double	line_step_y;
-	double	line_x;
-	double	line_y;
-	int		steps;
-	int		line_index;
-	int		pixel_x;
-	int		pixel_y;
-	int		radius_px;
+	double			line_step_x;
+	double			line_step_y;
+	double			line_x;
+	double			line_y;
+	int				steps;
+	int				line_index;
+	int				pixel_x;
+	int				pixel_y;
+	int				radius_px;
 	unsigned int	fov_color;
 
 	line_step_x = end_x - start_x;
