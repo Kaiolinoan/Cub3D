@@ -6,10 +6,10 @@ static double   get_factor(t_ray *ray)
 	double		factor;
 
 	max_dist = 12.0;
-	if (ray->perpWallDist >= max_dist)
+	if (ray->perp_wall_dist >= max_dist)
 		return (0x000000);
-	factor = (1.5 / (1.0 + ray->perpWallDist * 0.3))
-		* (1.0 - (ray->perpWallDist / max_dist));
+	factor = (1.5 / (1.0 + ray->perp_wall_dist * 0.3))
+		* (1.0 - (ray->perp_wall_dist / max_dist));
 	if (factor > 1.3)
 		factor = 1.3;
 	if (factor < 0.0)
@@ -44,12 +44,12 @@ int	color_gradient(t_ray *ray, int color)
 // {
 // 	double factor;
 
-// 	factor = 1.0 - (ray->perpWallDist / 12.0);
+// 	factor = 1.0 - (ray->perp_wall_dist / 12.0);
 
-// 	// if (ray->perpWallDist < 5.0)
+// 	// if (ray->perp_wall_dist < 5.0)
 //     // 	factor = 1.0;
 // 	// else
-// 	// 	factor = 1.0 / (1.0 + (ray->perpWallDist - 5.0) * 0.1);
+// 	// 	factor = 1.0 / (1.0 + (ray->perp_wall_dist - 5.0) * 0.1);
 // 	if (factor < 0)
 // 	    factor = 0;
 // 	char r = ((color >> 16) & 0xFF) * factor;

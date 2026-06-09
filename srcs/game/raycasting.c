@@ -7,16 +7,16 @@ static void	cast_ray(t_game *game, t_ray *ray)
 
 	while (!ray->hit)
 	{
-		if (ray->sideDistX < ray->sideDistY)
+		if (ray->side_dist_x < ray->side_dist_y)
 		{
-			ray->sideDistX += ray->deltaDistX;
-			ray->map_x += ray->stepX;
+			ray->side_dist_x += ray->delta_dist_x;
+			ray->map_x += ray->step_x;
 			ray->side = 0;
 		}
 		else
 		{
-			ray->sideDistY += ray->deltaDistY;
-			ray->map_y += ray->stepY;
+			ray->side_dist_y += ray->delta_dist_y;
+			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
 		x = ray->map_x;
@@ -31,49 +31,49 @@ static void	cast_ray(t_game *game, t_ray *ray)
 
 static void	check_raydir_x(t_player *player, t_ray *ray)
 {
-	if (ray->rayDirX == 0)
-		ray->deltaDistX = 1e30;
+	if (ray->ray_dir_x == 0)
+		ray->delta_dist_x = 1e30;
 	else
-		ray->deltaDistX = ft_abs(1.0 / ray->rayDirX);
-	if (ray->rayDirX < 0)
+		ray->delta_dist_x = ft_abs(1.0 / ray->ray_dir_x);
+	if (ray->ray_dir_x < 0)
 	{
-		ray->stepX = -1;
-		ray->sideDistX = (player->player_x - ray->map_x)
-			* ray->deltaDistX;
+		ray->step_x = -1;
+		ray->side_dist_x = (player->player_x - ray->map_x)
+			* ray->delta_dist_x;
 	}
 	else
 	{
-		ray->stepX = 1;
-		ray->sideDistX = (ray->map_x + 1.0 - player->player_x)
-			* ray->deltaDistX;
+		ray->step_x = 1;
+		ray->side_dist_x = (ray->map_x + 1.0 - player->player_x)
+			* ray->delta_dist_x;
 	}
 }
 
 static void	check_raydir_y(t_player *player, t_ray *ray)
 {
-	if (ray->rayDirY == 0)
-		ray->deltaDistY = 1e30;
+	if (ray->ray_dir_y == 0)
+		ray->delta_dist_y = 1e30;
 	else
-		ray->deltaDistY = ft_abs(1.0 / ray->rayDirY);
-	if (ray->rayDirY < 0)
+		ray->delta_dist_y = ft_abs(1.0 / ray->ray_dir_y);
+	if (ray->ray_dir_y < 0)
 	{
-		ray->stepY = -1;
-		ray->sideDistY = (player->player_y - ray->map_y)
-			* ray->deltaDistY;
+		ray->step_y = -1;
+		ray->side_dist_y = (player->player_y - ray->map_y)
+			* ray->delta_dist_y;
 	}
 	else
 	{
-		ray->stepY = 1;
-		ray->sideDistY = (ray->map_y + 1.0 - player->player_y)
-			* ray->deltaDistY;
+		ray->step_y = 1;
+		ray->side_dist_y = (ray->map_y + 1.0 - player->player_y)
+			* ray->delta_dist_y;
 	}
 }
 
 static void	init_ray(t_game *game, t_player *player, t_ray *ray, int x)
 {
-	ray->cameraX = 2 * x / (double)game->win_w - 1;
-	ray->rayDirX = player->dir_x + player->plane_x * ray->cameraX;
-	ray->rayDirY = player->dir_y + player->plane_y * ray->cameraX;
+	ray->camera_x = 2 * x / (double)game->win_w - 1;
+	ray->ray_dir_x = player->dir_x + player->plane_x * ray->camera_x;
+	ray->ray_dir_y = player->dir_y + player->plane_y * ray->camera_x;
 	ray->map_x = (int) player->player_x;
 	ray->map_y = (int) player->player_y;
 	ray->hit = false;

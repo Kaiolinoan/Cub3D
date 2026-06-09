@@ -140,4 +140,10 @@ void		display_speeds(t_game *game);
 void		clear_matriz(char **matriz);
 void		clear_game(t_game *game);
 
+//init_utils
+bool	set_image_path(t_texture *tex, char *path);
+bool	file_to_image(void *mlx, t_texture *dir);
+bool	get_dir_img_address(t_texture *dir);
+
+
 #endif

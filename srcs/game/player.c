@@ -62,7 +62,6 @@ void	initialize_player(t_game *game, t_player *player)
 {
 	player->player_x = game->map->start_x;
 	player->player_y = game->map->start_y;
-	player->mouse_flag = false;
 	if (player->starting_direction == NORTH)
 	{
 		set_player_dir_values(player, 0, -1);

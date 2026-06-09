@@ -1,21 +1,7 @@
 #include "cub3d.h"
 
-void	clear_images(t_game *game)
+void clear_images2(t_game *game)
 {
-	if (game->buffer.img)
-		mlx_destroy_image(game->mlx, game->buffer.img);
-	if (game->sprites.north.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.north.img.img);
-	if (game->sprites.east.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.east.img.img);
-	if (game->sprites.west.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.west.img.img);
-	if (game->sprites.south.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.south.img.img);
-	if (game->sprites.black_square.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.black_square.img.img);
-	if (game->sprites.white_square.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.white_square.img.img);
 	if (game->sprites.test.img.img)
 		mlx_destroy_image(game->mlx, game->sprites.test.img.img);
 	if (game->sprites.test1.img.img)
@@ -38,6 +24,25 @@ void	clear_images(t_game *game)
 		mlx_destroy_image(game->mlx, game->sprites.test9.img.img);
 	if (game->sprites.test10.img.img)
 		mlx_destroy_image(game->mlx, game->sprites.test10.img.img);
+}
+
+void	clear_images(t_game *game)
+{
+	if (game->buffer.img)
+		mlx_destroy_image(game->mlx, game->buffer.img);
+	if (game->sprites.north.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.north.img.img);
+	if (game->sprites.east.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.east.img.img);
+	if (game->sprites.west.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.west.img.img);
+	if (game->sprites.south.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.south.img.img);
+	if (game->sprites.black_square.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.black_square.img.img);
+	if (game->sprites.white_square.img.img)
+		mlx_destroy_image(game->mlx, game->sprites.white_square.img.img);
+	clear_images2(game);
 }
 
 void	free_sprites_path(t_game *game)
