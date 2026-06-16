@@ -6,10 +6,10 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 01:10:41 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/02 19:08:34 by kelle            ###   ########.fr       */
-/*   Updated: 2026/06/02 19:08:34 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/16 02:14:02 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -72,6 +72,29 @@ bool		flood_fill_prep(t_map *map);
 
 //--------------------------GAME-----------------------
 
+//=====================// Minimap //====================//
+
+// Minimap Main
+void	render_minimap(t_game *game);
+
+// Minimap FOV
+void	draw_minimap_fov(t_game *game, int center_x, int center_y);
+void	draw_minimap_fov_line(t_game *game, t_ip start, t_dp end);
+
+// Minimap FOV Utils
+unsigned int	blend_color_with_white(unsigned int base_color, double white_opacity);
+bool			minimap_in_circle(int x, int y, t_ip center, int radius_px);
+
+// Minimap Player
+void	draw_minimap_player(t_game *game, int center_x, int center_y);
+
+// Minimap Utils
+void			display_minimap(t_game *game);
+int				minimap_map_height(t_map *map);
+unsigned int	rgb_to_color(t_rgb *rgb);
+void			put_minimap_pixel(t_game *game, int x, int y, unsigned int color);
+unsigned int	minimap_tile_color(t_game *game, double world_x, double world_y);
+
 //debug
 void		render_player(t_game *game, t_img *img);
 void		render_elements(t_game *game);
@@ -81,10 +104,6 @@ void		draw_texture(t_game *game, t_img sprite, float x, float y, int size);
 //initialization
 bool		initialize_images(t_game *game, t_sprites *sprites);
 t_game		*initialize_game(char *filename);
-
-//minimap
-void		render_minimap(t_game *game);
-void		display_minimap(t_game *game);
 
 //mlx
 void		mlx_main(t_game *game);
@@ -119,26 +138,26 @@ void		handle_keys(int keycode, t_player *player);
 //--------------------------UTILS-----------------------
 
 //utils
-void		print_error(char *msg);
-size_t		array_len(char **array);
-void		remove_new_line_in_array(char **arr);
-void		remove_new_line(char *str);
-double		ft_abs(double num);
+void			print_error(char *msg);
+size_t			array_len(char **array);
+void			remove_new_line_in_array(char **arr);
+void			remove_new_line(char *str);
+double			ft_abs(double num);
 
 //parsing
-bool		check_full_line(char *full_line);
-bool		check_empty_line_on_map(char *full_line);
-char		*ft_strjoin_and_free(char *s1, char *s2);
-int			ft_strcmp(char *s1, char *s2);
-bool		check_extension(char *filename, char *extension);
+bool			check_full_line(char *full_line);
+bool			check_empty_line_on_map(char *full_line);
+char			*ft_strjoin_and_free(char *s1, char *s2);
+int				ft_strcmp(char *s1, char *s2);
+bool			check_extension(char *filename, char *extension);
 
 //text_render
-void		draw_string_scaled(t_game *game, char *str, int x, int y, int scale);
-void		display_speeds(t_game *game);
+void			draw_string_scaled(t_game *game, char *str, int x, int y, int scale);
+void			display_speeds(t_game *game);
 
 //clean
-void		clear_matriz(char **matriz);
-void		clear_game(t_game *game);
+void			clear_matriz(char **matriz);
+void			clear_game(t_game *game);
 
 //init_utils
 bool	set_image_path(t_texture *tex, char *path);

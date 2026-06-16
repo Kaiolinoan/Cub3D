@@ -6,12 +6,32 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 00:32:42 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/02 00:35:15 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/16 02:11:50 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+typedef struct s_ip
+{
+	int	x;
+	int	y;
+}	t_ip;
+
+typedef struct s_dp
+{
+	double	x;
+	double	y;
+}	t_dp;
+
+typedef struct s_fov_ray
+{
+	t_dp	left;
+	t_dp	right;
+	int		idx;
+	int		total;
+}	t_fov_ray;
 
 typedef struct s_img
 {
