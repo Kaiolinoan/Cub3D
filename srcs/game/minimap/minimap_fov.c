@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 19:24:32 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/16 02:12:13 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 03:41:04 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static double	raycast_to_wall(t_game *game, t_dp start, t_dp dir,
 	ray_y = start.y;
 	while (ray_distance < max_distance)
 	{
-		if (minimap_tile_color(game, ray_x, ray_y) == GREY)
+		if (minimap_tile_color(game, ray_x, ray_y) == GREY
+			|| minimap_tile_color(game, ray_x, ray_y) == MINIMAP_DOOR_COLOR)
 			return (ray_distance);
 		ray_x += dir.x * ray_step;
 		ray_y += dir.y * ray_step;

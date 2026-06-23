@@ -6,13 +6,13 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 19:12:33 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/10 19:12:34 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 05:11:19 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void clear_images2(t_game *game)
+void	clear_images2(t_game *game)
 {
 	if (game->sprites.test.img.img)
 		mlx_destroy_image(game->mlx, game->sprites.test.img.img);
@@ -91,6 +91,8 @@ void	clear_game(t_game *game)
 		clear_matriz(game->map->grid);
 		free(game->map);
 	}
+	if (game->door)
+		free(game->door);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)

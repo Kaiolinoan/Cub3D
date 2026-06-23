@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 03:11:39 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/02 00:09:14 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/22 18:41:47 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ static void	update_player_x(t_game *game, double dir, double speed, bool sum)
 	}
 	if (game->map->grid[(int)game->player.player_y][(int)collision_x] == '1')
 		return ;
+	if (game->map->grid[(int)game->player.player_y][(int)collision_x] == 'D'
+	&& is_door_blocking(game, (int)collision_x, (int)game->player.player_y))
+		return ;
 	game->player.player_x = new_x;
 }
 
@@ -69,6 +72,9 @@ static void	update_player_y(t_game *game, double dir, double speed, bool sum)
 		collision_y = new_y - dir * padding;
 	}
 	if (game->map->grid[(int)collision_y][(int)game->player.player_x] == '1')
+		return ;
+	if (game->map->grid[(int)collision_y][(int)game->player.player_x] == 'D'
+	&& is_door_blocking(game, (int)game->player.player_x, (int)collision_y))
 		return ;
 	game->player.player_y = new_y;
 }

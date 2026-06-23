@@ -6,13 +6,13 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 19:11:46 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/10 19:11:47 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 03:55:00 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_texture(t_game *game, t_img sprite, float x, float y, int size)
+void	draw_texture(t_game *game, t_img sprite, t_fp p, int size)
 {
 	int				tex_y;
 	int				tex_x;
@@ -28,7 +28,7 @@ void	draw_texture(t_game *game, t_img sprite, float x, float y, int size)
 			offset = (tex_y * sprite.line_length)
 				+ (tex_x * sprite.bits_per_pixel / 8);
 			color = *(unsigned int *)(sprite.addr + offset);
-			my_pixel_put(game, tex_x + x, tex_y + y, color);
+			my_pixel_put(game, tex_x + p.x, tex_y + p.y, color);
 			tex_x++;
 		}
 		tex_y++;
@@ -50,10 +50,10 @@ void	render_elements(t_game *game)
 		{
 			if (map[y][x] == '1')
 				draw_texture(game, game->sprites.white_square.img,
-					x * PX, y * PX, PX);
+					(t_fp){x * PX, y * PX}, PX);
 			else if (map[y][x] == ' ')
 				draw_texture(game, game->sprites.black_square.img,
-					x * PX, y * PX, PX);
+					(t_fp){x * PX, y * PX}, PX);
 			x++;
 		}
 		y++;

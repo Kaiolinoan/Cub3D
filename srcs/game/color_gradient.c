@@ -6,13 +6,13 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 19:11:41 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/10 19:11:42 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 03:51:46 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static double   get_factor(t_ray *ray)
+static double	get_factor(t_ray *ray)
 {
 	double		max_dist;
 	double		factor;

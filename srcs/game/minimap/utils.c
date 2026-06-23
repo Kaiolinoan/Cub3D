@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 19:16:38 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/10 19:28:11 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 03:39:09 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ unsigned int	minimap_tile_color(t_game *game, double world_x, double world_y)
 		return (GREY);
 	if (cell == ' ')
 		return (rgb_to_color(game->map->ceiling));
+	if (cell == 'D')
+		return (MINIMAP_DOOR_COLOR);
 	return (rgb_to_color(game->map->floor));
 }

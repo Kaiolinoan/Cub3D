@@ -6,12 +6,18 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 00:32:42 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/16 02:11:50 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 04:54:17 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+typedef struct s_fp
+{
+	float	x;
+	float	y;
+}	t_fp;
 
 typedef struct s_ip
 {
@@ -24,6 +30,12 @@ typedef struct s_dp
 	double	x;
 	double	y;
 }	t_dp;
+
+typedef struct s_glyph_style
+{
+	int	scale;
+	int	color;
+}	t_glyph_style;
 
 typedef struct s_fov_ray
 {
@@ -111,9 +123,27 @@ typedef struct s_player
 	t_direction	starting_direction;
 }	t_player;
 
+typedef enum e_door_state
+{
+	DOOR_CLOSED,
+	DOOR_OPENING,
+	DOOR_OPEN,
+	DOOR_CLOSING,
+}	t_door_state;
+
+typedef struct s_door
+{
+	int				x;
+	int				y;
+	t_door_state	state;
+	int				frame;
+}	t_door;
+
 typedef struct s_game
 {
 	t_player	player;
+	t_door		*door;
+	int			doors;
 	t_sprites	sprites;
 	t_img		buffer;
 	void		*mlx;

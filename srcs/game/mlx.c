@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 19:12:00 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/10 19:12:01 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 04:24:51 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	mlx_main(t_game *game)
 	if (!initialize_images(game, &game->sprites))
 		return ;
 	initialize_player(game, &game->player);
+	init_door_audio();
 	mlx_hook(game->win, KeyPress, KeyPressMask, player_moving, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, player_idle, game);
 	mlx_hook(game->win, 6, PointerMotionMask, mouse_move, game);

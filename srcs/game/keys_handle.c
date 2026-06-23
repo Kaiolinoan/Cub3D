@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 19:11:55 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/16 03:27:50 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 04:40:05 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	handle_minimap_size(int keycode, t_game *game)
 static void	handle_minimap_zoom(int keycode, t_game *game)
 {
 	double	radius_px;
-	
+
 	if (keycode == XK_bracketright)
 	{
 		if (game->minimap_tile_size < 40)
@@ -87,11 +87,11 @@ void	handle_speed_keys(int keycode, t_game *game)
 	}
 	else if (keycode == XK_2)
 		game->movement_speed += 0.01;
-	else if (keycode == XK_comma)
+	else if (keycode == XK_Down)
 	{
 		if (game->rotation_speed > 0.005)
 			game->rotation_speed -= 0.005;
 	}
-	else if (keycode == XK_period)
+	else if (keycode == XK_Up)
 		game->rotation_speed += 0.005;
 }

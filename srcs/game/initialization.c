@@ -6,13 +6,13 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 19:11:50 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/16 03:15:03 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 04:37:49 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool init_path(t_sprites *sprites)
+bool	init_path(t_sprites *sprites)
 {
 	if (!set_image_path(&sprites->black_square, "assets/black_square-64.xpm"))
 		return (false);
@@ -35,7 +35,7 @@ bool init_path(t_sprites *sprites)
 	return (true);
 }
 
-bool init_images(t_game *game, t_sprites *sprites)
+bool	init_images(t_game *game, t_sprites *sprites)
 {
 	if (!file_to_image(game->mlx, &sprites->east))
 		return (false);
@@ -69,7 +69,8 @@ bool init_images(t_game *game, t_sprites *sprites)
 	// file_to_image(game->mlx, &sprites->test8);
 	// file_to_image(game->mlx, &sprites->test9);
 	// file_to_image(game->mlx, &sprites->test10);
-bool init_address(t_sprites *sprites)
+
+bool	init_address(t_sprites *sprites)
 {
 	if (!get_dir_img_address(&sprites->east))
 		return (false);
@@ -139,7 +140,7 @@ t_game	*initialize_game(char *filename)
 	game->minimap_tile_size = 20;
 	game->minimap_radius_tiles = 7.0;
 	game->movement_speed = 0.07;
-	game->rotation_speed = 0.03;
+	game->rotation_speed = 0.05;
 	game->fov = 0.66;
 	return (game);
 }

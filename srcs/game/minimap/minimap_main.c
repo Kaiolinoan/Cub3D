@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 03:26:05 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/16 02:23:43 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 03:45:55 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	render_background_pixel(t_game *game, t_ip p, int radius_px,
 	t_ip offset)
 {
-	double	poffx; //pixel offset x
-	double	poffy; //pixel offset y
+	double	poffx;
+	double	poffy;
 	double	dist_sq;
 
 	poffx = p.x - radius_px;

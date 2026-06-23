@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 02:46:11 by kelle             #+#    #+#             */
-/*   Updated: 2026/05/23 02:47:39 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/22 18:12:25 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	check_maze_chars(char **grid)
 		while (grid[i][j])
 		{
 			if (grid[i][j] && grid[i][j] != '0' && grid[i][j] != '1'
-				&& grid[i][j] != ' ')
+				&& grid[i][j] != ' ' && grid[i][j] != 'D')
 			{
 				if (grid[i][j] == 'N' || grid[i][j] == 'S'
 					|| grid[i][j] == 'W' || grid[i][j] == 'E')
@@ -82,6 +82,8 @@ bool	check_if_map_is_valid(char *filename, t_game *game)
 		return (print_error("There is no player starting position on map"), 0);
 	else if (chars_nb > 1)
 		return (print_error("Multiple player's starting position on map"), 0);
+	if (!check_doors(game))
+		return (false);
 	get_starting_info(game);
 	if (!flood_fill_prep(game->map))
 		return (print_error("Map is not surrounded by walls"), 0);

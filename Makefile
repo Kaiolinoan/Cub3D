@@ -19,11 +19,14 @@ UTILSDIR	= utils/
 # ================================= FILES =================================== #
 
 SRC_FILES	=	main.c 
-UTILS_FILES	=	utils.c parse_utils.c text_render.c clean_utils.c init_utils.c
-PARSE_FILES =	parse_elements.c parse_map.c parse_rgb.c flood_fill.c get_infos.c
-GAME_FILES 	=	render.c player.c movement.c raycasting.c initialization.c mlx.c \
-				debug.c raycasting2.c color_gradient.c keys_handle.c
-MINIMAP_FILES =	minimap_fov_utils.c minimap_fov.c minimap_main.c minimap_player.c \
+UTILS_FILES	=	utils.c parse_utils.c text_render.c clean_utils.c init_utils.c		\
+				door_utils.c text_render_utils.c
+PARSE_FILES =	parse_elements.c parse_map.c parse_rgb.c flood_fill.c get_infos.c	\
+				parse_doors.c
+GAME_FILES 	=	render.c player.c movement.c raycasting.c initialization.c mlx.c	\
+				debug.c raycasting2.c color_gradient.c keys_handle.c door.c			\
+				door_sound.c
+MINIMAP_FILES =	minimap_fov_utils.c minimap_fov.c minimap_main.c minimap_player.c	\
 				utils.c
 
 SRC = $(addprefix $(SRCDIR), $(SRC_FILES))					\

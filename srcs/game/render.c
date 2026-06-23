@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 02:33:09 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/02 18:51:48 by kelle            ###   ########.fr       */
+/*   Updated: 2026/06/23 03:57:17 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ int	render(t_game *game)
 	{
 		paint_plain_background(game, GREY);
 		render_elements(game);
-		move_player(game, &game->player);
+		(update_doors(game), move_player(game, &game->player));
 		draw_texture(game, game->sprites.black_square.img,
-			game->player.player_x * PX,
-			game->player.player_y * PX, 3);
+			(t_fp){game->player.player_x * PX,
+			game->player.player_y * PX}, 3);
 		print_fov(game, &game->player);
 		if (game->minimap)
 			render_minimap(game);
@@ -93,7 +93,7 @@ int	render(t_game *game)
 	else
 	{
 		paint_background(game);
-		move_player(game, &game->player);
+		(update_doors(game), move_player(game, &game->player));
 		raycasting(game);
 		if (game->minimap)
 			render_minimap(game);
