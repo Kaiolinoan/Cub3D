@@ -86,7 +86,10 @@ void	handle_speed_keys(int keycode, t_game *game)
 			game->movement_speed -= 0.01;
 	}
 	else if (keycode == XK_2)
-		game->movement_speed += 0.01;
+	{
+		if (game->movement_speed < 0.7)
+			game->movement_speed += 0.01;
+	}
 	else if (keycode == XK_Down)
 	{
 		if (game->rotation_speed > 0.005)
