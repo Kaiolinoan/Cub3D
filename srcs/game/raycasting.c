@@ -14,8 +14,9 @@
 
 static void	cast_ray(t_game *game, t_ray *ray)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	char	tile;
 
 	while (!ray->hit)
 	{
@@ -33,11 +34,22 @@ static void	cast_ray(t_game *game, t_ray *ray)
 		}
 		x = ray->map_x;
 		y = ray->map_y;
-		if (y < 0 || y >= game->win_h
-			|| x < 0 || x >= (int)strlen(game->map->grid[ray->map_y]))
+		if (y < 0 || !game->map->grid[y]
+			|| x < 0 || x >= (int)ft_strlen(game->map->grid[y]))
 			return ;
-		if (game->map->grid[ray->map_y][ray->map_x] == '1')
-			ray->hit = 1;
+		tile = game->map->grid[y][x];
+		if (tile == '1')
+		{
+			ray->hit = true;
+			ray->tile = tile;
+			return ;
+		}
+		if (tile == 'D' && is_door_blocking(game, x, y))
+		{
+			ray->hit = true;
+			ray->tile = tile;
+			return ;
+		}
 	}
 }
 
@@ -89,6 +101,7 @@ static void	init_ray(t_game *game, t_player *player, t_ray *ray, int x)
 	ray->map_x = (int) player->player_x;
 	ray->map_y = (int) player->player_y;
 	ray->hit = false;
+	ray->tile = ' ';
 	check_raydir_x(player, ray);
 	check_raydir_y(player, ray);
 }

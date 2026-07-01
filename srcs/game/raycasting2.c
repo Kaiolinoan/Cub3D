@@ -14,6 +14,11 @@
 
 static void	load_texture(t_game *game, t_ray *ray)
 {
+	if (ray->tile == 'D')
+	{
+		ray->texture = game->sprites.test9;
+		return ;
+	}
 	if (ray->side == 0)
 	{
 		if (ray->ray_dir_x > 0)

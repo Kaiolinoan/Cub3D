@@ -185,6 +185,7 @@ typedef struct t_raycasting
 	int			side;
 	int			line_height;
 	bool		hit;
+	char		tile;
 	int			tex_x;
 	t_texture	texture;
 }	t_ray;

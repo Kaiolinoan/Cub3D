@@ -32,6 +32,10 @@ bool	init_path(t_sprites *sprites)
 		return (false);
 	if (!set_image_path(&sprites->test7, "assets/bright.xpm"))
 		return (false);
+	if (!set_image_path(&sprites->test8, "assets/brick.xpm"))
+		return (false);
+	if (!set_image_path(&sprites->test9, "assets/door.xpm"))
+		return (false);
 	return (true);
 }
 
@@ -62,6 +66,10 @@ bool	init_images(t_game *game, t_sprites *sprites)
 	if (!file_to_image(game->mlx, &sprites->test6))
 		return (false);
 	if (!file_to_image(game->mlx, &sprites->test7))
+		return (false);
+	if (!file_to_image(game->mlx, &sprites->test8))
+		return (false);
+	if (!file_to_image(game->mlx, &sprites->test9))
 		return (false);
 	return (true);
 }
@@ -97,6 +105,10 @@ bool	init_address(t_sprites *sprites)
 	if (!get_dir_img_address(&sprites->test6))
 		return (false);
 	if (!get_dir_img_address(&sprites->test7))
+		return (false);
+	if (!get_dir_img_address(&sprites->test8))
+		return (false);
+	if (!get_dir_img_address(&sprites->test9))
 		return (false);
 	return (true);
 }
