@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: klino-an <klino-an@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 19:12:00 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/23 04:24:51 by kelle            ###   ########.fr       */
+/*   Updated: 2026/07/07 20:49:40 by klino-an         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,45 +22,22 @@ int	finish_game(void *param)
 	return (0);
 }
 
-// int mouse_move(int x, int y, void *param)
-// {
-// 	t_game	*game;
-// 	int delta_x;
-// 	int center_x;
-// 	int center_y;
-
-// 	game = param;
-// 	center_x = game->win_w / 2;
-// 	center_y = game->win_h / 2;
-// 	if (x == center_x && y == center_y)
-// 		return (0);
-// 	delta_x = x - center_x;
-// 	rotate(&game->player, delta_x  * game->rotation_speed * 0.01);
-// 	// mlx_mouse_move(game->mlx, game->win, center_x, center_y);
-// 	// mlx_mouse_hide(game->mlx, game->win);
-// 	// printf("mouse\n");
-	// game->player.mouse_x = delta_x;
-// 	return (0);
-// }
-
-static int	mouse_move(int x, int y, void *param)
+int mouse_move(int x, int y, void *param)
 {
-	t_game		*game;
-	static int	last_x = -1;
-	int			dx;
+	t_game	*game;
+	int delta_x;
+	int center_x;
+	int center_y;
 
-	(void)y;
 	game = param;
-	if (game->player.mouse_flag == false)
+	center_x = game->win_w / 2;
+	center_y = game->win_h / 2;
+	if ((x == center_x && y == center_y) || (game->player.mouse_flag == false))
 		return (0);
-	if (last_x == -1)
-	{
-		last_x = x;
-		return (0);
-	}
-	dx = x - last_x;
-	last_x = x;
-	rotate(&game->player, dx * game->rotation_speed * 0.1);
+	delta_x = x - center_x;
+	rotate(&game->player, delta_x  * game->rotation_speed * 0.01);
+	mlx_mouse_move(game->mlx, game->win, center_x, center_y);
+	mlx_mouse_hide(game->mlx, game->win);
 	return (0);
 }
 
