@@ -5,19 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/10 19:12:09 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/10 19:12:10 by kelle            ###   ########.fr       */
+/*   Created: 2026/07/07 20:03:15 by kelle             #+#    #+#             */
+/*   Updated: 2026/07/07 20:12:09 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	cast_ray(t_game *game, t_ray *ray)
+bool	out_of_bounds(t_game *game, t_ray *ray)
 {
-	int		x;
-	int		y;
-	char	tile;
+	if (ray->map_y < 0 || ray->map_y >= game->win_h || ray->map_x < 0)
+		return (true);
+	if (ray->map_x >= (int)strlen(game->map->grid[ray->map_y]))
+		return (true);
+	return (false);
+}
 
+void	cast_ray(t_game *game, t_ray *ray, char tile)
+{
 	while (!ray->hit)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
@@ -32,28 +37,20 @@ static void	cast_ray(t_game *game, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		x = ray->map_x;
-		y = ray->map_y;
-		if (y < 0 || !game->map->grid[y]
-			|| x < 0 || x >= (int)ft_strlen(game->map->grid[y]))
+		if (out_of_bounds(game, ray))
 			return ;
-		tile = game->map->grid[y][x];
+		tile = game->map->grid[ray->map_y][ray->map_x];
 		if (tile == '1')
+			ray->hit = 1;
+		else if (tile == 'D' && ray_hits_door(game, ray))
 		{
-			ray->hit = true;
-			ray->tile = tile;
-			return ;
-		}
-		if (tile == 'D' && is_door_blocking(game, x, y))
-		{
-			ray->hit = true;
-			ray->tile = tile;
-			return ;
+			ray->hit = 1;
+			ray->is_door = true;
 		}
 	}
 }
 
-static void	check_raydir_x(t_player *player, t_ray *ray)
+void	check_raydir_x(t_player *player, t_ray *ray)
 {
 	if (ray->ray_dir_x == 0)
 		ray->delta_dist_x = 1e30;
@@ -73,7 +70,7 @@ static void	check_raydir_x(t_player *player, t_ray *ray)
 	}
 }
 
-static void	check_raydir_y(t_player *player, t_ray *ray)
+void	check_raydir_y(t_player *player, t_ray *ray)
 {
 	if (ray->ray_dir_y == 0)
 		ray->delta_dist_y = 1e30;
@@ -91,34 +88,4 @@ static void	check_raydir_y(t_player *player, t_ray *ray)
 		ray->side_dist_y = (ray->map_y + 1.0 - player->player_y)
 			* ray->delta_dist_y;
 	}
-}
-
-static void	init_ray(t_game *game, t_player *player, t_ray *ray, int x)
-{
-	ray->camera_x = 2 * x / (double)game->win_w - 1;
-	ray->ray_dir_x = player->dir_x + player->plane_x * ray->camera_x;
-	ray->ray_dir_y = player->dir_y + player->plane_y * ray->camera_x;
-	ray->map_x = (int) player->player_x;
-	ray->map_y = (int) player->player_y;
-	ray->hit = false;
-	ray->tile = ' ';
-	check_raydir_x(player, ray);
-	check_raydir_y(player, ray);
-}
-
-int	raycasting(t_game *game)
-{
-	t_ray	ray;
-	int		x;
-
-	x = 0;
-	while (x < game->win_w)
-	{
-		init_ray(game, &game->player, &ray, x);
-		cast_ray(game, &ray);
-		calculate_wall(game, &ray);
-		draw_textured_line(game, &ray, x);
-		x++;
-	}
-	return (0);
 }

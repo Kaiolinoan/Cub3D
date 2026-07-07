@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 01:10:41 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/23 05:20:57 by kelle            ###   ########.fr       */
+/*   Updated: 2026/07/07 20:19:48 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 
 // Door
 # define DOOR_RANGE 1.5
-# define DOOR_ANIM_FRAMES 8
+# define DOOR_ANIM_FRAMES 14
 
 // Door Sounds
 # define DOOR_OPEN_SOUND "assets/sounds/door_open.wav"
@@ -150,7 +150,14 @@ void			my_pixel_put(t_game *game, int x, int y, int color);
 //raycasting 
 int				raycasting(t_game *game);
 void			calculate_wall(t_game *game, t_ray *ray);
-void			draw_textured_line(t_game *game, t_ray *ray, int x);
+void			draw_textured_line(t_game *game, t_ray *ray, int x, int y);
+void			cast_ray(t_game *game, t_ray *ray, char tile);
+void			check_raydir_y(t_player *player, t_ray *ray);
+void			check_raydir_x(t_player *player, t_ray *ray);
+bool			ray_hits_door(t_game *game, t_ray *ray);
+unsigned int	get_texture_pixel(t_img *texture, int x, int y);
+void			find_wall_hit(t_game *game, t_ray *ray);
+void			load_texture(t_game *game, t_ray *ray);
 
 //color gradient
 int				color_gradient(t_ray *ray, int color);
@@ -185,6 +192,8 @@ void			display_speeds(t_game *game);
 t_door			*get_door_at(t_game *game, int x, int y);
 char			get_char_at(char **grid, int y, int x);
 bool			is_walkable(char c);
+void			clear_door(t_game *game, size_t i);
+void			clear_door_frames(void *mlx, t_texture *frames, int count);
 
 //clean
 void			clear_matriz(char **matriz);

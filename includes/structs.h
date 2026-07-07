@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 00:32:42 by kelle             #+#    #+#             */
-/*   Updated: 2026/06/23 04:54:17 by kelle            ###   ########.fr       */
+/*   Updated: 2026/07/03 19:36:39 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_sprites
 	t_texture	test8;
 	t_texture	test9;
 	t_texture	test10;
+	t_texture	*door_frames;
 }	t_sprites;
 
 typedef struct s_player
@@ -185,6 +186,7 @@ typedef struct t_raycasting
 	int			side;
 	int			line_height;
 	bool		hit;
+	bool		is_door;
 	char		tile;
 	int			tex_x;
 	t_texture	texture;
