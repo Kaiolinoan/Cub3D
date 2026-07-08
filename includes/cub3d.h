@@ -134,6 +134,9 @@ bool			is_door_blocking(t_game *game, int x, int y);
 void			init_door_audio(void);
 void			play_sound(char *path);
 
+// door frames
+bool			load_door_frames(t_game *game, t_sprites *sprites);
+
 //movement
 void			rotate(t_player *player, double rot);
 void			move_player(t_game *game, t_player *player);

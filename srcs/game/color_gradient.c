@@ -51,24 +51,3 @@ int	color_gradient(t_ray *ray, int color)
 		color = (color >> 1) & 0x7F7F7F;
 	return (color);
 }
-
-// int color_gradient(t_ray *ray, int color)
-// {
-// 	double factor;
-
-// 	factor = 1.0 - (ray->perp_wall_dist / 12.0);
-
-// 	// if (ray->perp_wall_dist < 5.0)
-//     // 	factor = 1.0;
-// 	// else
-// 	// 	factor = 1.0 / (1.0 + (ray->perp_wall_dist - 5.0) * 0.1);
-// 	if (factor < 0)
-// 	    factor = 0;
-// 	char r = ((color >> 16) & 0xFF) * factor;
-// 	char g = ((color >> 8) & 0xFF) * factor;
-// 	char b = (color & 0xFF) * factor;
-// 	color = (r << 16) | (g << 8) | b;
-// 	if (ray->side == 1)
-//     	color = (color >> 1) & 0x7F7F7F;
-// 	return (color);
-// }

@@ -22,12 +22,12 @@ int	finish_game(void *param)
 	return (0);
 }
 
-int mouse_move(int x, int y, void *param)
+int	mouse_move(int x, int y, void *param)
 {
 	t_game	*game;
-	int delta_x;
-	int center_x;
-	int center_y;
+	int		delta_x;
+	int		center_x;
+	int		center_y;
 
 	game = param;
 	center_x = game->win_w / 2;
@@ -35,7 +35,7 @@ int mouse_move(int x, int y, void *param)
 	if ((x == center_x && y == center_y) || (game->player.mouse_flag == false))
 		return (0);
 	delta_x = x - center_x;
-	rotate(&game->player, delta_x  * game->rotation_speed * 0.01);
+	rotate(&game->player, delta_x * game->rotation_speed * 0.01);
 	mlx_mouse_move(game->mlx, game->win, center_x, center_y);
 	mlx_mouse_hide(game->mlx, game->win);
 	return (0);

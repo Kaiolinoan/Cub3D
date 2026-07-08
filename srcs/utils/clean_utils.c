@@ -12,34 +12,6 @@
 
 #include "cub3d.h"
 
-void	clear_images2(t_game *game)
-{
-	if (game->sprites.test.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test.img.img);
-	if (game->sprites.test1.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test1.img.img);
-	if (game->sprites.test2.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test2.img.img);
-	if (game->sprites.test3.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test3.img.img);
-	if (game->sprites.test4.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test4.img.img);
-	if (game->sprites.test5.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test5.img.img);
-	if (game->sprites.test6.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test6.img.img);
-	if (game->sprites.test7.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test7.img.img);
-	if (game->sprites.test8.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test8.img.img);
-	if (game->sprites.test9.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test9.img.img);
-	if (game->sprites.test10.img.img)
-		mlx_destroy_image(game->mlx, game->sprites.test10.img.img);
-	if (game->sprites.door_frames)
-		clear_door(game, 0);
-}
-
 void	clear_images(t_game *game)
 {
 	if (game->buffer.img)
@@ -56,7 +28,8 @@ void	clear_images(t_game *game)
 		mlx_destroy_image(game->mlx, game->sprites.black_square.img.img);
 	if (game->sprites.white_square.img.img)
 		mlx_destroy_image(game->mlx, game->sprites.white_square.img.img);
-	clear_images2(game);
+	if (game->sprites.door_frames)
+		clear_door(game, 0);
 }
 
 void	free_sprites_path(t_game *game)
@@ -67,17 +40,6 @@ void	free_sprites_path(t_game *game)
 	free(game->sprites.south.path);
 	free(game->sprites.black_square.path);
 	free(game->sprites.white_square.path);
-	free(game->sprites.test.path);
-	free(game->sprites.test1.path);
-	free(game->sprites.test2.path);
-	free(game->sprites.test3.path);
-	free(game->sprites.test4.path);
-	free(game->sprites.test5.path);
-	free(game->sprites.test6.path);
-	free(game->sprites.test7.path);
-	free(game->sprites.test8.path);
-	free(game->sprites.test9.path);
-	free(game->sprites.test10.path);
 }
 
 void	clear_game(t_game *game)

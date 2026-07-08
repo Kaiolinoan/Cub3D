@@ -25,7 +25,8 @@ PARSE_FILES =	parse_elements.c parse_map.c parse_rgb.c flood_fill.c get_infos.c	
 				parse_doors.c
 GAME_FILES 	=	render.c player.c movement.c raycasting.c initialization.c mlx.c	\
 				debug.c raycasting2.c color_gradient.c keys_handle.c door.c			\
-				door_sound.c raycasting_door.c raycasting_draw.c raycasting_init.c
+				door_sound.c raycasting_door.c raycasting_draw.c raycasting_init.c	\
+				door_frames.c
 MINIMAP_FILES =	minimap_fov_utils.c minimap_fov.c minimap_main.c minimap_player.c	\
 				utils.c
 
