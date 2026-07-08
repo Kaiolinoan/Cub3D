@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 19:12:33 by kelle             #+#    #+#             */
-/*   Updated: 2026/07/02 19:27:53 by kelle            ###   ########.fr       */
+/*   Updated: 2026/07/09 00:47:03 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	clear_images(t_game *game)
 	if (game->sprites.white_square.img.img)
 		mlx_destroy_image(game->mlx, game->sprites.white_square.img.img);
 	if (game->sprites.door_frames)
-		clear_door(game, 0);
+		clear_door(game);
 }
 
 void	free_sprites_path(t_game *game)

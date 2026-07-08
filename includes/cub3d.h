@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 01:10:41 by kelle             #+#    #+#             */
-/*   Updated: 2026/07/07 20:19:48 by kelle            ###   ########.fr       */
+/*   Updated: 2026/07/09 00:46:59 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ void			display_speeds(t_game *game);
 t_door			*get_door_at(t_game *game, int x, int y);
 char			get_char_at(char **grid, int y, int x);
 bool			is_walkable(char c);
-void			clear_door(t_game *game, size_t i);
+void			clear_door(t_game *game);
 void			clear_door_frames(void *mlx, t_texture *frames, int count);
 
 //clean

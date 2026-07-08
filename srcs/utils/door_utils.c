@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 03:47:52 by kelle             #+#    #+#             */
-/*   Updated: 2026/07/02 19:44:16 by marvin           ###   ########.fr       */
+/*   Updated: 2026/07/09 00:49:09 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,18 @@ void	clear_door_frames(void *mlx, t_texture *frames, int count)
 	free(frames);
 }
 
-void	clear_door(t_game *game, size_t i)
+void	clear_door(t_game *game)
 {
+	size_t	i;
+
+	i = 0;
 	while (i < DOOR_ANIM_FRAMES)
 	{
 		if (game->sprites.door_frames[i].img.img)
 			mlx_destroy_image(game->mlx,
 				game->sprites.door_frames[i].img.img);
+		if (game->sprites.door_frames[i].path)
+			free(game->sprites.door_frames[i].path);
 		i++;
 	}
 	free(game->sprites.door_frames);
