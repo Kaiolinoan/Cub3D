@@ -20,7 +20,7 @@ UTILSDIR	= utils/
 
 SRC_FILES	=	main.c 
 UTILS_FILES	=	utils.c parse_utils.c text_render.c clean_utils.c init_utils.c		\
-				door_utils.c text_render_utils.c
+				door_utils.c text_render_utils.c text_render_glyphs.c
 PARSE_FILES =	parse_elements.c parse_map.c parse_rgb.c flood_fill.c get_infos.c	\
 				parse_doors.c
 GAME_FILES 	=	render.c player.c movement.c raycasting.c initialization.c mlx.c	\

@@ -6,7 +6,7 @@
 /*   By: kelle <kelle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 01:10:41 by kelle             #+#    #+#             */
-/*   Updated: 2026/07/09 00:46:59 by kelle            ###   ########.fr       */
+/*   Updated: 2026/07/09 21:07:26 by kelle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,8 @@ bool			check_extension(char *filename, char *extension);
 void			draw_string_scaled(t_game *game, char *str, t_ip pos,
 					int scale);
 void			display_speeds(t_game *game);
+int				get_pattern_value(int index, int row);
+int				get_digit_pattern(char digit, int row);
 
 // door
 t_door			*get_door_at(t_game *game, int x, int y);
