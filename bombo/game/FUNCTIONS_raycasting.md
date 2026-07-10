@@ -7,7 +7,7 @@ bool	out_of_bounds(t_game *game, t_ray *ray)
 {
 	if (ray->map_y < 0 || ray->map_y >= game->win_h || ray->map_x < 0)
 		return (true);
-	if (ray->map_x >= (int)strlen(game->map->grid[ray->map_y]))
+	if (ray->map_x >= (int)ft_strlen(game->map->grid[ray->map_y]))
 		return (true);
 	return (false);
 }
