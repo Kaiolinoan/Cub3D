@@ -47,9 +47,9 @@ LIBFT		= $(LIBFTDIR)libft.a
 # =============================== COMPILER ================================== #
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g3
-         #-Wno-incompatible-pointer-types \
-          -Wno-cast-function-type  -g3#-Wall -Wextra -Werror -g3 # RESTAURAR PARA A ORIGINAL DEPOIS
+CFLAGS			= -Wall -Wextra -Werror -g3 \
+					-Wno-incompatible-pointer-types \
+          			-Wno-cast-function-type  -g3#-Wall -Wextra -Werror -g3 # RESTAURAR PARA A ORIGINAL DEPOIS
 MLX_FLAGS = -L$(MLIBXDIR) -lmlx -lXext -lX11 -lm -lz
 RM				= rm -f
 MAKE			= make

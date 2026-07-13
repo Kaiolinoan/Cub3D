@@ -12,9 +12,9 @@
 
 #include "cub3d.h"
 
-static int	get_file_fd(char *filename)
+static int get_file_fd(char *filename)
 {
-	int	fd;
+	int fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -28,9 +28,9 @@ static int	get_file_fd(char *filename)
 	return (fd);
 }
 
-static t_elem	*init_elements(t_game *game)
+static t_elem *init_elements(t_game *game)
 {
-	static t_elem	elements[5];
+	static t_elem elements[5];
 
 	elements[0].id = "NO";
 	elements[0].target = (char **)&game->sprites.north.path;
@@ -45,10 +45,10 @@ static t_elem	*init_elements(t_game *game)
 	return (elements);
 }
 
-static int	filter_element(char **arr, t_game *game)
+static int filter_element(char **arr, t_game *game)
 {
-	t_elem	*elements;
-	int		i;
+	t_elem *elements;
+	int i;
 
 	i = 0;
 	elements = init_elements(game);
@@ -67,11 +67,11 @@ static int	filter_element(char **arr, t_game *game)
 	return (filter_rgb(arr, game));
 }
 
-static int	check_and_assign_coordinate(t_game *g, char *line)
+static int check_and_assign_coordinate(t_game *g, char *line)
 {
-	int			tmp;
-	static int	count;
-	char		**arr;
+	int tmp;
+	static int count;
+	char **arr;
 
 	if (count == 6)
 		return (count);
@@ -80,7 +80,7 @@ static int	check_and_assign_coordinate(t_game *g, char *line)
 	if (line && line[0] == '\n')
 		return (0);
 	arr = ft_split(line, ' ');
-	if (!arr || !*arr || !arr[1])
+	if (!arr || !*arr || !arr[1] || array_len(arr) > 2)
 		return (clear_matriz(arr), print_error("Invalid element"), -1);
 	remove_new_line(*arr);
 	tmp = filter_element(arr, g);
@@ -92,12 +92,12 @@ static int	check_and_assign_coordinate(t_game *g, char *line)
 	return (count);
 }
 
-int	get_map_details(t_game *game, char *filename)
+int get_map_details(t_game *game, char *filename)
 {
-	int		count;
-	char	*line;
-	char	*full_line;
-	int		fd;
+	int count;
+	char *line;
+	char *full_line;
+	int fd;
 
 	full_line = NULL;
 	fd = get_file_fd(filename);
@@ -108,7 +108,7 @@ int	get_map_details(t_game *game, char *filename)
 		line = get_next_line(fd);
 		count = check_and_assign_coordinate(game, line);
 		if (!line || count < 0 || count > 6)
-			break ;
+			break;
 		if (count == 6)
 			full_line = ft_strjoin_and_free(full_line, line);
 		free(line);
